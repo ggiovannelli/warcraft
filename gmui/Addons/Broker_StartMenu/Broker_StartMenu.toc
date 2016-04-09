@@ -1,0 +1,38 @@
+## Interface: 60200
+## X-Curse-Packaged-Version: r20151007193220
+## X-Curse-Project-Name: Broker: StartMenu
+## X-Curse-Project-ID: broker-startmenu
+## X-Curse-Repository-ID: wow/broker-startmenu/mainline
+
+## Author: Lynxium
+
+## Title: Broker: |cffeda55fStartMenu|r
+## Notes: A fully customized dropdown menu, a MicroMenu, GameMenu replacement.
+## Version: r20151007193220
+
+## X-Category: Interface Enhancements
+## X-Localizations: enUS
+## X-Website: http://wow.curseforge.com/addons/broker-startmenu/
+## X-License: MIT.
+
+## SavedVariables: Broker_StartMenuDb
+libs\LibStub.lua
+libs\CallbackHandler-1.0.lua
+libs\LibDataBroker-1.1.lua
+libs\AceLocale-3.0\AceLocale-3.0.xml
+libs\AceDB-3.0\AceDB-3.0.xml
+libs\Libra-36\Libra.xml
+libs\LibraEx.lua
+libs\EasyDisplay.lua
+
+loc\enUS.lua
+
+Tooltip.lua
+Menu.lua
+Core.lua
+
+options\UI.lua
+options\General.lua
+options\Accessibility.lua
+options\Menu.lua
+options\Profiles.lua

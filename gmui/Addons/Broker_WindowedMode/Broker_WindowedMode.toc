@@ -1,0 +1,27 @@
+## Interface: 50001
+## Title: Broker: Windowed Mode
+## Notes: Toggle Windowed Mode with click or keybind.
+## Author: Morsker
+## Version: v1.2.9
+#@debug@
+# ## Version: DEV
+#@end-debug@
+## X-Curse-Packaged-Version: v1.2.9
+## X-Curse-Project-Name: Broker_WindowedMode
+## X-Curse-Project-ID: broker-windowed-mode
+## X-Curse-Repository-ID: wow/broker-windowed-mode/mainline
+
+## SavedVariables: Broker_WindowedModeDB
+
+## OptionalDeps: LibStub, CallbackHandler-1.0, LibDataBroker-1.1, Ace3
+## LoadManagers: AddonLoader
+## X-LoadOn-Always: delayed
+
+#@no-lib-strip@
+libs\LibStub\LibStub.lua
+libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
+#@end-no-lib-strip@
+LibDataBroker-1.1.lua
+
+Locales.lua
+Broker_WindowedMode.lua

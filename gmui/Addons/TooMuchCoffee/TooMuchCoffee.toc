@@ -1,0 +1,13 @@
+## Interface: 60100
+## Title: Too Much Coffee!
+## Notes: Keeps your Miner's Coffee and Preserved Mining Pick stack under 20, so that you can loot Mining Carts without fear.
+## Version: 0.3.0-beta
+## Author: roncli
+## X-Category: Garrison
+## X-Email: roncli@roncli.com
+## X-Curse-Packaged-Version: v0.3-beta
+## X-Curse-Project-Name: Too Much Coffee!
+## X-Curse-Project-ID: toomuchcoffee
+## X-Curse-Repository-ID: wow/toomuchcoffee/mainline
+
+TooMuchCoffee.lua

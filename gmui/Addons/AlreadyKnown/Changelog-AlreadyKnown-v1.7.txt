@@ -1,0 +1,20 @@
+------------------------------------------------------------------------
+r17 | ahak | 2015-08-06 23:00:59 +0000 (Thu, 06 Aug 2015) | 1 line
+Changed paths:
+   A /tags/v1.7 (from /trunk:16)
+
+Tagging as v1.7
+------------------------------------------------------------------------
+r16 | ahak | 2015-08-06 22:59:56 +0000 (Thu, 06 Aug 2015) | 2 lines
+Changed paths:
+   M /trunk/AlreadyKnown.lua
+
+- Added 'gray' color and ColorPickerFrame for new 'custom' color (KernelG)
+- Added 'monochrome' -mode for those who want to desaturate icons on items that are already known (makes at least gray scales look better)
+------------------------------------------------------------------------
+r14 | ahak | 2015-07-22 14:48:00 +0000 (Wed, 22 Jul 2015) | 1 line
+Changed paths:
+   M /trunk/AlreadyKnown.lua
+
+- Added support for [Equipment Blueprint: Tuskarr Fishing Net] and [Equipment Blueprint: Unsinkable] (hepkus)
+------------------------------------------------------------------------

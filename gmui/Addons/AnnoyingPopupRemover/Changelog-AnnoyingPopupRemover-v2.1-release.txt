@@ -1,0 +1,12 @@
+tag v2.1-release
+4dabc471e79c24c085e41fafeb8d69625e3c4d13
+KyrosKrane <kyros@kyros.info>
+2015-07-14 01:50:21 +0400
+
+v2.1-release
+
+
+--------------------
+
+KyrosKrane:
+	- Added version to TOC

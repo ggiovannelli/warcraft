@@ -1,0 +1,7 @@
+------------------------------------------------------------------------
+r174 | yess | 2016-01-09 22:56:02 +0000 (Sat, 09 Jan 2016) | 1 line
+Changed paths:
+   M /trunk/ChocolateBar/Chocolate.lua
+
+Fixed an error when using the option to desaturate icons, ticket #63
+------------------------------------------------------------------------

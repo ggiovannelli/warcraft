@@ -1,0 +1,10 @@
+tag 1.9.5
+b8fdc1533cf87ba8a9889dbd03f2cd3f0d60bb7c
+Alar of Daggerspine <alar@aspide.it>
+2015-11-20 13:33:46 +0100
+
+Fix: Library upgrade
+
+--------------------
+
+No changelog

@@ -1,0 +1,8 @@
+## Interface: 60200
+## Title: gmLazyDelete
+## Notes: Remove the need to type DELETE to destroy items
+## Author: Axilea, Nemesis(it)
+## Version: 1.0-2015090201
+
+core.lua
+

@@ -1,0 +1,12 @@
+tag v5.3-release
+23bd9963adc24ba7241ad5a7156d5301be78fe23
+PProvost <peter@provost.org>
+2013-05-22 20:26:28 -0600
+
+Tagging v5.3-release
+
+
+--------------------
+
+PProvost:
+	- TOC to 5.3

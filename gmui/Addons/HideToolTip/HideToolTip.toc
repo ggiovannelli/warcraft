@@ -1,0 +1,8 @@
+## Interface: 60200
+## Title: HideToolTip
+## Notes: Hide tooltips on actionbars when in combat.
+## Author: Axilea, Nemesis(it)
+## Version: 1.0-2015062401
+
+core.lua
+

@@ -1,0 +1,25 @@
+## Interface: 60200
+## Version: 6.2.2.15
+## X-Curse-Packaged-Version: 6.2.2.15
+## X-Curse-Project-Name: GoFish
+## X-Curse-Project-ID: gofish
+## X-Curse-Repository-ID: wow/gofish/mainline
+
+## Title: GoFish
+## Notes: Click-cast fishing and enhanced fishing sounds.
+## Notes-deDE: Angelt schnell per Doppelklick, und erhöht Fischerei Soundeffekte.
+## Notes-esES: Pescar rápidamente por doble clic, y aumentar los sonidos de pesca.
+## Notes-esMX: Pescar rápidamente por doble clic, y aumentar los sonidos de pesca.
+
+## Author: Phanx
+## X-Email: addons@phanx.net
+## X-Copyright: Copyright (c) 2013-2015 Phanx. All rights reserved.
+## X-Website: https://github.com/Phanx/GoFish
+
+## SavedVariables: GoFishDB
+
+Localization.lua
+Data.lua
+
+Addon.lua
+Options.lua

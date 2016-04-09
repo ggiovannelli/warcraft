@@ -1,0 +1,210 @@
+2012-11-02  Robin Schoonover  <robin@cornhooves.org>
+
+[6292aef5d4d9] [tip]
+* LibPetJournal-2.0.lua:
+
+Upvalue/fix global refs.
+
+
+2012-10-26  Robin Schoonover  <robin@cornhooves.org>
+
+[633898439550]
+* .hgtags:
+
+Added tag 2.0.24 for changeset 74c5e1bbc7c7
+
+
+[74c5e1bbc7c7] [2.0.24]
+* LibPetJournal-2.0.lua:
+
+Bump minor.
+
+
+[ce4013a158d4]
+* LibPetJournal-2.0.lua:
+
+Fire an additional PetListUpdated event after filters have been restored.
+
+Requested By: nullberri
+
+
+2012-10-25  Robin Schoonover  <robin@cornhooves.org>
+
+[b874723dd233]
+* .hgtags:
+
+Added tag 2.0.23 for changeset 84ada1cd9e14
+
+
+[84ada1cd9e14] [2.0.23]
+* LibPetJournal-2.0.lua:
+
+Bump minor.
+
+
+2012-10-24  Robin Schoonover  <robin@cornhooves.org>
+
+[6802a8b537dd]
+* LibPetJournal-2.0.lua:
+
+Fix verification of ByPetID readiness for 5.1 client.
+
+
+2012-10-10  Robin Schoonover  <robin@cornhooves.org>
+
+[af517fcfc652]
+* .hgtags:
+
+Added tag 2.0.22 for changeset 267170072549
+
+
+[267170072549] [2.0.22]
+* LibPetJournal-2.0.lua:
+
+Bump minor.
+
+
+2012-10-09  Robin Schoonover  <robin@cornhooves.org>
+
+[3550f2a4f7a3]
+* LibPetJournal-2.0.lua:
+
+Fix is logged in check in ADDON_LOADED.
+
+
+2012-09-28  Robin Schoonover  <robin@cornhooves.org>
+
+[56c1a271a16a]
+* .hgtags:
+
+Added tag 2.0.21 for changeset 679350e3c7ce
+
+
+[679350e3c7ce] [2.0.21]
+* LibPetJournal-2.0.lua:
+
+Bump minor.
+
+
+[5357a7fc1fed]
+* LibPetJournal-2.0.lua:
+
+Don't take any action at all before PLAYER_LOGIN has fired.
+
+This in particular includes queuing a delayed load.
+
+
+2012-09-23  Robin Schoonover  <robin@cornhooves.org>
+
+[0cc801b5ed22]
+* .hgtags:
+
+Added tag 2.0.20 for changeset 2d63fb1c5350
+
+
+[2d63fb1c5350] [2.0.20]
+* LibPetJournal-2.0.lua:
+
+Bump minor.
+
+
+[7e63e17b7e4a]
+* LibPetJournal-2.0.lua:
+
+isOwned is probably a better check for proper petID existance.
+
+
+[febf8fa6a250]
+* LibPetJournal-2.0.lua:
+
+Handle checking if the player has no pets at all.
+
+
+[e60dd094f035]
+* .hgtags:
+
+Added tag 2.0.19 for changeset 849548439444
+
+
+[849548439444] [2.0.19]
+* LibPetJournal-2.0.lua:
+
+Don't bother wiping something that shouldn't have been touched yet.
+
+
+[65ec26b1e4fa]
+* LibPetJournal-2.0.lua:
+
+Bump minor.
+
+
+[3f7b877134b5]
+* LibPetJournal-2.0.lua:
+
+Run immediately on next opportunity when name is nil.
+
+
+[e8200253e21a]
+* LibPetJournal-2.0.lua:
+
+Delay load until GetPetInfoByPetID can return information.
+
+
+2012-09-21  Robin Schoonover  <robin@cornhooves.org>
+
+[96464ea8328e]
+* LibPetJournal-2.0.lua:
+
+It appears we no longer need to track COMPANION_UPDATE late login updates.
+
+PET_JOURNAL_LIST_UPDATE seems to fire more reliably now.
+
+
+2012-09-19  Robin Schoonover  <robin@cornhooves.org>
+
+[892e97911150]
+* .hgtags:
+
+Added tag 2.0.18 for changeset 0234243d9ff2
+
+
+[0234243d9ff2] [2.0.18]
+* LibPetJournal-2.0.lua:
+
+Bump minor.
+
+
+[baac3790c482]
+* LibPetJournal-2.0.lua:
+
+Only check IsLoggedIn() to determine PetJournal "readiness"
+
+Unfortunately, C_PetJournal.IsJournalUnlocked() is not the appropriate function
+to check, since it's primary purpose is actually detection of players with
+multiple accounts online in the same b.net account.
+
+
+[7e5e2eab913e]
+* LibPetJournal-2.0.lua:
+
+Rename internal variable pj_unlocked to pj_unready
+
+
+[67197afe2194]
+* .hgtags:
+
+Added tag 2.0.17 for changeset 2f8418a1917a
+
+
+[2f8418a1917a] [2.0.17]
+* LibPetJournal-2.0.lua:
+
+Bump minor.
+
+
+[e7cf4eb8b05b]
+* LibPetJournal-2.0.lua:
+
+Prevent some extra PetsUpdated events from firing during early load
+
+
