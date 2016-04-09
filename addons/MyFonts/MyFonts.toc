@@ -1,0 +1,14 @@
+## Interface: 60200
+## Title: MyFonts
+## Notes: A small addon for changing default UI fonts and/or adding in SharedMedia
+## Author: Axilea, Nemesis(it)
+## Version: 1.0-2015062401
+## SavedVariables: MYFONTS
+
+
+libs\LibStub.lua
+libs\CallbackHandler-1.0.lua
+libs\LibSharedMedia-3.0.lua
+libs\PhanxConfig-Dropdown.lua
+
+core.lua

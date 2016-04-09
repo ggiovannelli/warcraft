@@ -1,0 +1,8 @@
+## Interface: 60200
+## Title: RemGank
+## Notes: Remember those gankers !
+## Author: Axilea, Nemesis(it)
+## Version: 1.0-2015062401
+## SavedVariables: RemGankDB, REMGANK_ENABLE, REMGANK_GUILD_ANNOUNCE
+
+core.lua

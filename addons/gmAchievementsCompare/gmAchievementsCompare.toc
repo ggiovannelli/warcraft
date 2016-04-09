@@ -1,0 +1,7 @@
+## Interface: 60200
+## Title: gmAchievementsCompare
+## Notes: Compare your achievements against the linked ones.
+## Author: Axilea
+## Version: 1.0-2015101701
+
+core.lua

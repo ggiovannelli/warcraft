@@ -1,0 +1,8 @@
+## Interface: 60200
+## Title: gmGG
+## Notes: A very simple addon for auto-GG !
+## Author: Axilea, Nemesis(it)
+## Version: 1.0-2015120301
+## SavedVariables: GMGG
+
+core.lua

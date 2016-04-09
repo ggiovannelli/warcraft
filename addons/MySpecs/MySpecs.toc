@@ -1,0 +1,12 @@
+## Interface: 60200
+## Title: MySpecs
+## Notes: A very simple LDB addon for changing current spec
+## Author: Axilea, Nemesis(it)
+## Version: 1.0-2015100301
+
+
+libs\LibStub.lua
+libs\CallbackHandler-1.0.lua
+libs\LibDataBroker-1.1.lua
+
+core.lua

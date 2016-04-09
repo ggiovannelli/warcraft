@@ -1,0 +1,8 @@
+## Interface: 60200
+## Title: Aggromon
+## Notes: A very minimal aggro alert addon. 
+## Author: Axilea, Nemesis(it)
+## Version: 1.0-2015062401
+## SavedVariables: AGGROMON
+
+core.lua
