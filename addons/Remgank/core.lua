@@ -382,7 +382,7 @@ RemGank_Rld_Player_Button:SetScript("OnClick",
 		RemGank_DB_Dump()		
 	end)  
 
--- ScrollFrame with Phanx
+-- ScrollFrame by Phanx
 local RemGank_dropdown = PCD:New(RemGank_conf_options)
 RemGank_dropdown:SetPoint("TOPLEFT", 16, -215)
 	function RemGank_dropdown:OnValueChanged(selname)
