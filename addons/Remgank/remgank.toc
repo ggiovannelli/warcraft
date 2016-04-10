@@ -2,7 +2,11 @@
 ## Title: RemGank
 ## Notes: Remember those gankers !
 ## Author: Axilea, Nemesis(it)
-## Version: 1.0-2015062401
+## Version: 1.0-2016041001
 ## SavedVariables: RemGankDB, REMGANK_ENABLE, REMGANK_GUILD_ANNOUNCE
+
+libs\LibStub.lua
+libs\CallbackHandler-1.0.lua
+libs\PhanxConfig-Dropdown.lua
 
 core.lua

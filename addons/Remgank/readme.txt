@@ -1,5 +1,10 @@
 Remember those gankers !
 
+
+1.0-2016041001
+- used Phanx PhanxConfig-Dropdown instead of FauxScrollFrame used before (much easier)
+- optimize the RegisterEvent code, thanks to resike (http://www.wowinterface.com/forums/showthread.php?t=53298) 
+ 
 v1.0-2015062401
 - bump toc for 6.2
 
