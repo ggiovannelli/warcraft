@@ -2,7 +2,7 @@ local ADDON = ...
 local tooltip
 
 local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
-local dataobj = ldb:NewDataObject("gmGraphicsSwitch", {
+local dataobj = ldb:NewDataObject("gmVideoSwitch", {
 	type = "data source",
 	icon = "Interface\\Addons\\"..ADDON.."\\bluewin.tga",
 	text = "-"

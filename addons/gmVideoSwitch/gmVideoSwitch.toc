@@ -2,7 +2,7 @@
 ## Title: gmVideoSwitch
 ## Notes: A LDB plugin to change screen/window settings
 ## Author: Axilea, Nemesis(it)
-## Version: 1.0-2016102602
+## Version: 1.0-2016103101
 
 libs\LibStub.lua
 libs\CallbackHandler-1.0.lua

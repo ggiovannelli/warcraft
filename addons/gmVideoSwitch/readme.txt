@@ -1,3 +1,6 @@
+v1.0-2016103101
+- fix typo
+
 v1.0-2016102602
 - fix empty local line
 
