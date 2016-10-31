@@ -1,0 +1,8 @@
+## Interface: 70100
+## Title: RemGank
+## Notes: Remember those gankers !
+## Author: Axilea, Nemesis(it)
+## Version: 1.0-2016102601
+## SavedVariables: RemGankDB, REMGANK_ENABLE, REMGANK_GUILD_ANNOUNCE
+
+core.lua

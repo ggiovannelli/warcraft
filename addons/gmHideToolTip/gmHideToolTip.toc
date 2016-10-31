@@ -1,0 +1,7 @@
+## Interface: 70100
+## Title: gmHideToolTip
+## Notes: Hide tooltips on actionbars when in combat.
+## Author: Axilea, Nemesis(it)
+## Version: 1.0-2016102601
+
+core.lua

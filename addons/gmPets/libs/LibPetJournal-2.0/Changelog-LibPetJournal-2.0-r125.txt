@@ -1,0 +1,212 @@
+2016-07-19  Robin Schoonover  <robin@cornhooves.org>
+
+[1b647e732311] [tip]
+* LibPetJournal-2.0.toc:
+
+Update TOC Interface for 7.0 client.
+
+
+2016-07-17  Robin Schoonover  <robin@cornhooves.org>
+
+[b7c72299bb8a]
+* .hgtags:
+
+Added tag 2.0.32 for changeset b9a792aa1cbf
+
+
+[b9a792aa1cbf] [2.0.32]
+* LibPetJournal-2.0.lua:
+
+Bump minor.
+
+
+2016-07-14  Robin Schoonover  <robin@cornhooves.org>
+
+[48c893b91335]
+* LibPetJournal-2.0.lua:
+
+Increase timeout to wait for PJLU event, and make it a constant.
+
+
+[522f9ad70c12]
+* LibPetJournal-2.0.lua:
+
+Only reset/fire events if we successfully loaded pets.
+
+
+2016-07-12  Robin Schoonover  <robin@cornhooves.org>
+
+[3c82fc0c595c]
+* LibPetJournal-2.0.lua:
+
+Add timeout for waiting for PJLU after setting filters.
+
+
+2016-05-31  Robin Schoonover  <robin@cornhooves.org>
+
+[6efa53e8fc88]
+* .hgtags:
+
+LibPetJournal 2.0.31
+
+
+[f0cd5e3e5856] [2.0.31]
+* LibPetJournal-2.0.lua:
+
+Bump minor.
+
+
+2016-05-30  Robin Schoonover  <robin@cornhooves.org>
+
+[157c45446850]
+* LibPetJournal-2.0.lua:
+
+Fix retrying of load when we detect bad entries.
+
+
+2016-05-25  Robin Schoonover  <robin@cornhooves.org>
+
+[b2ea3795eebc]
+* .hgtags:
+
+LibPetJournal 2.0.30
+
+
+[ee3b50e4c983] [2.0.30]
+* LibPetJournal-2.0.lua:
+
+Bump minor.
+
+
+2016-05-13  Robin Schoonover  <robin@cornhooves.org>
+
+[19462701a2a2]
+* LibPetJournal-2.0.lua:
+
+Fix type filter function name.  It did not actually change.
+
+
+2016-05-12  Robin Schoonover  <robin@cornhooves.org>
+
+[e0f8ece977c3]
+* LibPetJournal-2.0.lua:
+
+Don't wait for PJLU when we didn't actually change any filters.
+
+
+[184e4f0dc5d7]
+* LibPetJournal-2.0.lua:
+
+Bump minor.
+
+
+[757ac4195043]
+* LibPetJournal-2.0.lua:
+
+Wait for the collected/uncollected flags to take effect after setting them.
+
+On the plus side, it seems the client acts sanely on an empty cache for both 6.x and 7.0
+
+
+[fb09d291cff4]
+* LibPetJournal-2.0.lua:
+
+Fix for meaning of "Checked" vs "Filtered" and provide flag for SetAllTypes/SourcesChecked
+
+
+[4cc9d4c09305]
+* LibPetJournal-2.0.lua:
+
+Update copyright year.
+
+
+[44a71b3cd3f4]
+* LibPetJournal-2.0.lua:
+
+Chase rename of flag filter enum names in the 7.0 client.
+
+
+2016-05-11  Robin Schoonover  <robin@cornhooves.org>
+
+[08ed41244a1b]
+* LibPetJournal-2.0.lua:
+
+Chase renaming of Pet Journal filter APIs in the 7.0 client.
+
+
+2015-10-24  Robin Schoonover  <robin@cornhooves.org>
+
+[d181733bad41]
+* .hgtags:
+
+Added tag 2.0.28 for changeset 0504e6b47a77
+
+
+2015-10-16  Robin Schoonover  <robin@cornhooves.org>
+
+[0504e6b47a77] [2.0.28]
+* LibPetJournal-2.0.lua:
+
+Update License year.
+
+
+[af7ec359d369]
+* LibPetJournal-2.0.lua:
+
+Bump minor.
+
+
+[40f3f8627166]
+* LibPetJournal-2.0.lua:
+
+Save filter settings on library object, preserving them across upgrades.
+
+
+[0cd2a5f60e7d]
+* LibPetJournal-2.0.lua:
+
+Remove pre-6.0 client compat code.
+
+
+2015-09-24  Robin Schoonover  <robin@cornhooves.org>
+
+[e24960760fea]
+* .gitlab-ci.yml:
+
+When pushing to curse, only push back to origin when commits are added.
+
+
+2015-09-23  Robin Schoonover  <robin@cornhooves.org>
+
+[9eb6c0ad945a]
+* .docmeta:
+
+Remove .docmeta, it seems unlikely it will ever be fixed.
+
+
+[fdd9308beee9]
+* LibPetJournal-2.0.toc:
+
+Update TOC Interface for 6.2, because why not.
+
+
+[33263c043063]
+* .gitlab-ci.yml:
+
+Enable push part of sync with curseforge.
+
+
+[049a75cff3a8]
+* .gitlab-ci.yml:
+
+Partially add sync script
+
+
+2015-02-24  Robin Schoonover  <robin@cornhooves.org>
+
+[903de666f821]
+* LibPetJournal-2.0.toc:
+
+Update TOC Interface for 6.1
+
+

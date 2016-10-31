@@ -1,0 +1,12 @@
+## Interface: 70100
+## Title: gmBagsSlots
+## Notes: LDB Free Bags Slots
+## Author: Axilea, Nemesis(it)
+## Version: 1.0-2016102601
+
+libs\LibStub.lua
+libs\CallbackHandler-1.0.lua
+libs\LibDataBroker-1.1.lua
+
+core.lua
+

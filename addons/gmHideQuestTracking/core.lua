@@ -1,0 +1,5 @@
+local f = CreateFrame("Frame")
+f:RegisterEvent("GROUP_ROSTER_UPDATE")
+f:SetScript("OnEvent", function(self, event)
+    SetCVar("showQuestTrackingTooltips", IsInRaid() and 0 or 1)
+end)
