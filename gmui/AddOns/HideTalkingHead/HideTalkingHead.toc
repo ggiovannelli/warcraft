@@ -1,0 +1,9 @@
+## Interface: 70100
+## Version: v1.0.2
+## Title: HideTalkingHead
+## X-Curse-Packaged-Version: v1.0.2
+## X-Curse-Project-Name: HideTalkingHead
+## X-Curse-Project-ID: hidetalkinghead
+## X-Curse-Repository-ID: wow/hidetalkinghead/mainline
+
+HideTalkingHead.lua

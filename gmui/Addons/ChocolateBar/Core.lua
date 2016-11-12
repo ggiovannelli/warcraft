@@ -1,7 +1,5 @@
-﻿local LibStub = LibStub
-local broker = LibStub("LibDataBroker-1.1")
-local LSM = LibStub("LibSharedMedia-3.0")
-local ChocolateBar = LibStub("AceAddon-3.0"):NewAddon("ChocolateBar", "AceConsole-3.0", "AceEvent-3.0")
+local LibStub, broker, LSM = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibSharedMedia-3.0")
+local ChocolateBar = LibStub("AceAddon-3.0"):NewAddon("ChocolateBar", "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("ChocolateBar")
 local _G, pairs, ipairs, table, string, tostring = _G, pairs, ipairs, table, string, tostring
 local select, strjoin, CreateFrame = select, strjoin, CreateFrame
@@ -9,6 +7,7 @@ local select, strjoin, CreateFrame = select, strjoin, CreateFrame
 ChocolateBar.Bar = {}
 ChocolateBar.ChocolatePiece = {}
 ChocolateBar.Drag = {}
+local modules = {}
 
 local Drag = ChocolateBar.Drag
 local Chocolate = ChocolateBar.ChocolatePiece
@@ -42,226 +41,83 @@ function debugbars()
 	end
 end
 
---------
--- drop points functions
---------
-local function dropText(frame, choco)
-		local name = choco.name
-		db.objSettings[name].showText = not db.objSettings[name].showText
-		ChocolateBar:AttributeChanged(nil, name, "updateSettings", db.objSettings[name].showText)
-		choco.bar:ResetDrag(choco, name)
-		frame:SetBackdropColor(0,0,0,1)
-end
-
-local function dropOptions(frame, choco)
-		--[[
-		local name = choco.name
-		db.objSettings[name].align = "center"
-		db.objSettings[name].stickcenter = true
-		choco.bar:ResetDrag(choco, name)
-		frame:SetBackdropColor(0,0,0,1)
-		--]]
-		local obj = choco.obj
-		local name = obj.name
-		local label = obj.label
-		local cleanName
-		if label then 
-			cleanName = string.gsub(label, "\|c........", "")
-		else
-			cleanName = string.gsub(name, "\|c........", "")
-		end
-		cleanName = string.gsub(cleanName, "\|r", "")
-		cleanName = string.gsub(cleanName, "[%c \127]", "")
-		ChocolateBar:LoadOptions(cleanName)
-		choco.bar:ResetDrag(choco, choco.name)
-		frame:SetBackdropColor(0,0,0,1)
-end
-
-local function dropDisable(frame, choco)
-		choco:Hide()
-		ChocolateBar:DisableDataObject(choco.name)
-		frame:SetBackdropColor(0,0,0,1) 
-end
-
-local function createDropPoint(name, dropfunc, offx, text, texture)
-	if not ChocolateBar.dropFrames then
-		local dropFrames = CreateFrame("Frame", nil, _G.UIParent)
-		dropFrames:SetWidth(400)
-		dropFrames:SetHeight(100)
-		ChocolateBar.dropFrames = dropFrames
-	end
-	local frame = CreateFrame("Frame", name, ChocolateBar.dropFrames)
-	frame:SetWidth(100)
-	frame:SetHeight(100)
-	frame:SetFrameStrata("DIALOG")
-	frame:SetPoint("TOPLEFT",offx,0)
-	--ChocolateBar:Debug(UIParent:GetScale())
-	--frame:SetPoint("CENTER",offx,250*UIParent:GetEffectiveScale() )
-	
-	frame:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background", 
-			edgeFile = "Interface/Tooltips/UI-Tooltip-Border", 
-			tile = false, tileSize = 16, edgeSize = 16, 
-			insets = { left = 4, right = 4, top = 4, bottom = 4 }});	
-	frame:SetBackdropColor(0,0,0,1)
-	
-	local tex = frame:CreateTexture()
-	tex:SetWidth(50)
-	tex:SetHeight(50)
-	tex:SetTexture(texture)
-	tex:SetPoint("TOPLEFT",25,-35)
-
-	frame.text = frame:CreateFontString(nil, nil, "GameFontHighlight")
-	--frame.text:SetPoint("LEFT", frame, "LEFT", 0, 0)
-	frame.text:SetPoint("CENTER",0, 30)
-	frame.text:SetText(text)
-	--frame:SetAlpha(0.5)
-	
-	frame:Hide()
-	frame.Drop = dropfunc
-	frame.GetFocus = function(frame, name) frame:SetBackdropColor(1,0,0,1) end
-		
-	frame.Drag = function(frame) end
-	frame.LoseFocus = function(frame) frame:SetBackdropColor(0,0,0,1) end
-	Drag:RegisterFrame(frame)
-	return frame
-end
-
-function ChocolateBar:SetDropPoins(parent)
-	local frame = ChocolateBar.dropFrames
-	frame:ClearAllPoints()
-	frame:SetClampedToScreen(true)
-	local x,y = parent:GetCenter()
-	local vhalf = (y > _G.UIParent:GetHeight() / 2) and "TOP" or "BOTTOM"
-	local yoff = (y > _G.UIParent:GetHeight() / 2) and -100 or 100
-	local xoff = frame:GetWidth() / 2
-	frame:SetPoint(vhalf.."LEFT",parent.bar,x-xoff,yoff)
-	frame:Show()
-end
+local defaults = {
+	profile = {
+		petBattleHideBars = true, combatopacity = 1, scale = 1,
+		height = 21, iconSize = 0.75, moveFrames = true, adjustCenter = true,
+		strata = "DIALOG", barRightClick = "OPTIONS",
+		gap = 7, textOffset = 1, moreBar = "none", moreBarDelay = 4,
+		fontPath = " ", fontSize = 12,
+		background = {
+			textureName = "DarkBottom",
+			texture = "Interface\\AddOns\\ChocolateBar\\pics\\DarkBottom",
+			borderTexture = "Tooltip-Border",
+			color = {r = 0.38, g = 0.36, b = 0.4, a = .94,},
+			borderColor = {r = 0, g = 0, b = 0, a = 0,},
+			tileSize = 130,
+			edgeSize = 8,
+			barInset = 3,
+		},
+		moduleOptions = {},
+		barSettings = {
+			['*'] = {
+				barName = "ChocolateBar1", align = "top", enabled = true, index = 10, width = 0,
+			},
+			['ChocolateBar1'] = {
+				barName = "ChocolateBar1", align = "top", enabled = true, index = 1, width = 0,
+			},
+		},
+		objSettings = {
+			['*'] = {
+				barName = "", align = "left", enabled = true, showText = true,
+				showIcon = true, index = 500, width = 0,
+			},
+		},
+	},
+	char = {
+		debug = false,
+	}
+}
 
 --------
 -- Ace3 callbacks
 --------
 function ChocolateBar:OnInitialize()
-	local defaults = {
-		profile = {
-			combathidetip = false,
-			combathidebar = false,
-			combatdisbar = false,
-			petBattleHideBars = true,
-			combatopacity = 1,
-			hideonleave = false,
-			scale = 1,
-			height = 21,
-			iconSize = 0.75,
-			moveFrames = true,
-			adjustCenter = true,
-			strata = "DIALOG",
-			barRightClick = "OPTIONS",
-			gap = 7,
-			textOffset = 1,
-			moreBar = "none",
-			moreBarDelay = 4,
-			fontPath = " ",
-			fontSize = 12,
-			background = {
-				textureName = "DarkBottom",
-				texture = "Interface\\AddOns\\ChocolateBar\\pics\\DarkBottom",
-				borderTexture = "Tooltip-Border",
-				color = {r = 0.38, g = 0.36, b = 0.4, a = .94,},
-				borderColor = {r = 0, g = 0, b = 0, a = 0,},
-				tile = false,
-				tileSize = 130,
-				edgeSize = 8,
-				barInset = 3,
-			},
-			textColor = nil,
-			barSettings = {
-				['*'] = {
-					barName = "ChocolateBar1",
-					align = "top",
-					autohide = false,
-					enabled = true,
-					index = 10,
-					width = 0,
-					--fineX = 0,
-					--fineY = 0,
-				},
-				['ChocolateBar1'] = {
-					barName = "ChocolateBar1",
-					align = "top",
-					autohide = false,
-					enabled = true,
-					index = 1,
-					width = 0,
-					--fineX = 0,
-					--fineY = 0,
-				},
-			},
-			objSettings = {
-				['*'] = {
-					barName = "",
-					align = "left",
-					enabled = true,
-					showText = true,
-					showIcon = true,
-					index = 500,
-					width = 0,
-				},
-			},
-		},
-		char = {
-			debug = false,
-		}
-	}
-	
 	self.db = LibStub("AceDB-3.0"):New("ChocolateBarDB", defaults, "Default")
-    self:RegisterChatCommand("chocolatebar", "ChatCommand")
-	
+  self:RegisterChatCommand("chocolatebar", "ChatCommand")
 	db = self.db.profile
+
 	LSM:Register("statusbar", "Tooltip", "Interface\\Tooltips\\UI-Tooltip-Background")
 	LSM:Register("statusbar", "Solid", "Interface\\Buttons\\WHITE8X8")
 	LSM:Register("statusbar", "Gloss","Interface\\AddOns\\ChocolateBar\\pics\\Gloss")
 	LSM:Register("statusbar", "DarkBottom","Interface\\AddOns\\ChocolateBar\\pics\\DarkBottom")
 	LSM:Register("statusbar", "X-Perl","Interface\\AddOns\\ChocolateBar\\pics\\X-Perl")
-
 	LSM:Register("background", "Titan","Interface\\AddOns\\ChocolateBar\\pics\\Titan")
 	LSM:Register("background", "Tribal","Interface\\AddOns\\ChocolateBar\\pics\\Tribal")
-	
-	
-	createDropPoint("ChocolateTextDrop", dropText, 0,L["Toggle Text"],"Interface/ICONS/INV_Inscription_Tradeskill01")
-	--createDropPoint("ChocolateCenterDrop", dropOptions,150,L["Options"],"Interface/Icons/Spell_Holy_GreaterBlessingofSalvation") 
-	createDropPoint("ChocolateCenterDrop", dropOptions,150,L["Options"],"Interface/Icons/INV_Gizmo_02") 
-	createDropPoint("ChocolateDisableDrop", dropDisable, 300,L["Disable Plugin"], "Interface/ICONS/Spell_ChargeNEgative")
-	
+
 	self:RegisterEvent("PLAYER_REGEN_DISABLED","OnEnterCombat")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED","OnLeaveCombat")
 	self:RegisterEvent("PLAYER_ENTERING_WORLD","OnEnterWorld")
-
 	self:RegisterEvent("PET_BATTLE_OPENING_START","OnPetBattleOpen")
 	self:RegisterEvent("PET_BATTLE_CLOSE","OnPetBattleOver")
-	
-	db = self.db.profile
-	
+	self:RegisterEvent("ADDON_LOADED",function(event, addonName)
+		if self[addonName] then self[addonName](self) end
+	end)
+
 	local barSettings = db.barSettings
 	for k, v in pairs(barSettings) do
 		local name = v.barName
 		self:AddBar(k, v, true) --force no anchor update
 	end
 	self:AnchorBars()
-	
-	local optionPanel = CreateFrame( "Frame", "ChocolateBarPanel", _G.UIParent );
-	optionPanel.name = "ChocolateBar";
-	local button = CreateFrame("Button",nil,optionPanel, "UIPanelButtonTemplate")
-	button:SetWidth(150)
-	button:SetHeight(22)
-	button:SetScript("OnClick", function()
-		_G.HideUIPanel(_G.InterfaceOptionsFrame)
-		_G.HideUIPanel(_G.GameMenuFrame)
-		ChocolateBar:ChatCommand()
-	end)
-	button:SetText("Configure")
-	button:SetPoint("TOPLEFT",20,-20)
-	_G.InterfaceOptions_AddCategory(optionPanel);
+
+	for name, module in pairs(modules) do
+		moduleDB = self.db.profile.moduleOptions[name] or {}
+		self.db.profile.moduleOptions[name] = moduleDB
+		if module.OnInitialize then module:OnInitialize(moduleDB) end
+	end
+
+	_G.InterfaceOptions_AddCategory(self:CreateOptionPanel());
 end
 
 function ChocolateBar:OnEnable()
@@ -277,6 +133,48 @@ function ChocolateBar:OnEnable()
 	end
 end
 
+function ChocolateBar:NewModule(name, moduleDefaults, options, optionsKey)
+	module = modules[name] or {}
+	module.default = defaults
+	module.options = options
+	defaults.profile.moduleOptions[name] = moduleDefaults
+	modules[name] = module
+	return module
+end
+
+-- called on ADDON_LOADED of Blizzard_OrderHallUI
+function ChocolateBar:Blizzard_OrderHallUI()
+	Debug("ChocolateBar:Blizzard_OrderHallUI")
+	--hookOrderHallCommandBar(self)
+	if not self.hookedOrderHallCommandBar and db.hideOrderHallCommandBar then
+			local orderHallCommandBar = _G.OrderHallCommandBar
+			Debug("hookOrderHallCommandBar", orderHallCommandBar)
+			if orderHallCommandBar then
+				orderHallCommandBar:HookScript("OnShow", function() Debug("OrderHallCommandBar:OnShow"); ChocolateBar:ToggleOrderHallCommandBar() end)
+				orderHallCommandBar:Hide()
+				self.hookedOrderHallCommandBar = true
+			end
+	end
+end
+
+function ChocolateBar:UpdateJostle()
+	for name, bar in pairs(chocolateBars) do
+		bar:UpdateJostle(db)
+	end
+end
+
+function ChocolateBar:ToggleOrderHallCommandBar()
+	local orderHallCommandBar = _G.OrderHallCommandBar
+	if orderHallCommandBar then
+		if db.hideOrderHallCommandBar then
+			orderHallCommandBar:Hide()
+		else
+			orderHallCommandBar:Show()
+		end
+	end
+	ChocolateBar:UpdateJostle()
+end
+
 function ChocolateBar:OnDisable()
 	for name, obj in broker:DataObjectIterator() do
 		if chocolateObjects[name] then chocolateObjects[name]:Hide() end
@@ -287,7 +185,6 @@ function ChocolateBar:OnDisable()
 	broker.UnregisterCallback(self, "LibDataBroker_DataObjectCreated")
 end
 
---/run LibStub("AceAddon-3.0"):GetAddon("ChocolateBar"):UpdateChoclates("updateSettings")
 function ChocolateBar:OnEnterWorld()
 	self:UpdateChoclates("resizeFrame")
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
@@ -315,7 +212,6 @@ function ChocolateBar:OnPetBattleOver(...)
 			end
 		end
 	end
-	
 end
 
 function ChocolateBar:OnEnterCombat()
@@ -374,10 +270,9 @@ function ChocolateBar:EnableDataObject(name, obj, noupdate)
 	end
 	local settings = db.objSettings[name]
 	settings.enabled = true
-	
-	--get bar from setings
+
 	local barName = settings.barName
-	
+
 	-- set default values depending on data source
 	if barName == "" then
 		--barName = "ChocolateBar1"
@@ -393,7 +288,7 @@ function ChocolateBar:EnableDataObject(name, obj, noupdate)
 				settings.align = "right"
 				settings.index = -1
 			end
-		else	
+		else
 			settings.align = "right"
 			settings.showText = false
 			if db.autodislauncher then
@@ -403,10 +298,10 @@ function ChocolateBar:EnableDataObject(name, obj, noupdate)
 		end
 	end
 	obj.name = name
-	
+
 	local choco = Chocolate:New(name, obj, settings, db)
 	chocolateObjects[name] = choco
-	
+
 	local bar = chocolateBars[barName]
 	if bar then
 		bar:AddChocolatePiece(choco, name,noupdate)
@@ -421,7 +316,7 @@ function ChocolateBar:DisableDataObject(name)
 	--get bar from setings
 	if db.objSettings[name] then
 		db.objSettings[name].enabled = false
-		local barName = db.objSettings[name].barName 
+		local barName = db.objSettings[name].barName
 		if(barName and chocolateBars[barName])then
 			chocolateBars[barName]:EatChocolatePiece(name)
 		end
@@ -431,8 +326,8 @@ end
 function ChocolateBar:AttributeChanged(event, name, key, value)
 	--Debug("ChocolateBar:AttributeChanged ",name," key: ", key, value)
 	local settings = db.objSettings[name]
-	if not settings.enabled then 
-		return 
+	if not settings.enabled then
+		return
 	end
 	local choco = chocolateObjects[name]
 	choco:Update(choco, key, value, name)
@@ -454,7 +349,7 @@ function ChocolateBar:TempDisAutohide(value)
 	end
 end
 
--- returns nil if the plugin is disabled 
+-- returns nil if the plugin is disabled
 function ChocolateBar:GetChocolate(name)
 	return chocolateObjects[name]
 end
@@ -472,7 +367,6 @@ function ChocolateBar:SetBars(tab)
 end
 
 local function getFreeBarName()
-	--local i = 1
 	local used = false
 	local name
 	for i=1,100 do
@@ -493,6 +387,12 @@ end
 function ChocolateBar:UpdateChoclates(key, val)
 	for name,choco in pairs(chocolateObjects) do
 		choco:Update(choco, key, val)
+	end
+end
+
+function ChocolateBar:ExecuteforAllChoclates(func, ...)
+	for name,choco in pairs(chocolateObjects) do
+		func(choco, ...)
 	end
 end
 
@@ -519,7 +419,7 @@ end
 function ChocolateBar:UpdateBars(updateindex)
 	for k,v in pairs(chocolateBars) do
 		v:UpdateBar(updateindex)
-		v:UpdateAutoHide(db) 
+		v:UpdateAutoHide(db)
 	end
 end
 
@@ -527,7 +427,7 @@ end
 function ChocolateBar:AnchorBars()
 	local temptop = {}
 	local tempbottom = {}
-	
+
 	for k,v in pairs(chocolateBars) do
 		local settings = v.settings
 		local index = settings.index or 500
@@ -568,7 +468,7 @@ function ChocolateBar:AnchorBars()
 		--end
 		relative = bar
 	end
-	
+
 	local relative = nil
 	for i, v in ipairs(tempbottom) do
 		local bar = v[1]
@@ -587,6 +487,38 @@ function ChocolateBar:AnchorBars()
 	end
 end
 
+function tablelength(T)
+  local count = 0
+  for _ in pairs(T) do count = count + 1 end
+  return count
+end
+
+function onRightClick(self)
+		Debug(self:GetName(), self:GetParent():GetName())
+		self:GetParent():OnMouseUp("RightButton")
+end
+
+local function createPointer()
+	Debug("createPointer")
+	pointer = CreateFrame("Frame", "ChocolatePointer")
+	pointer:SetFrameStrata("FULLSCREEN_DIALOG")
+	pointer:SetFrameLevel(20)
+	pointer:SetWidth(15)
+
+	local arrow = pointer:CreateTexture(nil, "DIALOG")
+	arrow:SetPoint("CENTER",pointer,"LEFT", 0, 0)
+	arrow:SetTexture("Interface\\AddOns\\ChocolateBar\\pics\\pointer")
+	return pointer
+end
+
+function ChocolateBar:GetPointer(parent)
+	Debug("GetPointer", self.pointer)
+	local pointer = self.pointer or createPointer()
+	pointer:SetHeight(parent:GetHeight())
+	pointer:SetParent(parent)
+	return pointer
+end
+
 --------
 -- option functions
 --------
@@ -599,10 +531,26 @@ function ChocolateBar:LoadOptions(pluginName, input)
 	local loaded, reason = _G.LoadAddOn("ChocolateBar_Options")
 	--Debug(loaded, reason)
 	if loaded then
-		ChocolateBar:OpenOptions(chocolateBars, db, input, pluginName)
+		ChocolateBar:OpenOptions(chocolateBars, db, input, pluginName, modules)
 	else
 		_G.DEFAULT_CHAT_FRAME:AddMessage(L["Could not load ChocolateBar_Options, make sure it's installed."])
 	end
+end
+
+function ChocolateBar:CreateOptionPanel()
+	local optionPanel = CreateFrame( "Frame", "ChocolateBarPanel", _G.UIParent );
+	optionPanel.name = "ChocolateBar";
+	local button = CreateFrame("Button",nil,optionPanel, "UIPanelButtonTemplate")
+	button:SetWidth(150)
+	button:SetHeight(22)
+	button:SetScript("OnClick", function()
+		_G.HideUIPanel(_G.InterfaceOptionsFrame)
+		_G.HideUIPanel(_G.GameMenuFrame)
+		ChocolateBar:ChatCommand()
+	end)
+	button:SetText("Configure")
+	button:SetPoint("TOPLEFT",20,-20)
+	return optionPanel
 end
 
 function ChocolateBar:UpdateDB(data)

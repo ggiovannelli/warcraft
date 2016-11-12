@@ -1,0 +1,42 @@
+## Interface: 70000
+## X-Curse-Packaged-Version: 7.0.3.4
+## X-Curse-Project-Name: Inventorian
+## X-Curse-Project-ID: inventorian
+## X-Curse-Repository-ID: wow/inventorian/mainline
+
+## Title: Inventorian
+## Notes: One large inventory.
+## Author: Nevcairiel
+## Version: 7.0.3.4
+
+## OptionalDeps: Ace3, LibWindow-1.1, BagBrother
+
+## SavedVariables: InventorianDB
+
+#@no-lib-strip@
+libs\LibStub\LibStub.lua
+libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
+
+libs\AceAddon-3.0\AceAddon-3.0.xml
+libs\AceConsole-3.0\AceConsole-3.0.xml
+libs\AceEvent-3.0\AceEvent-3.0.xml
+libs\AceHook-3.0\AceHook-3.0.xml
+libs\AceDB-3.0\AceDB-3.0.xml
+libs\AceLocale-3.0\AceLocale-3.0.xml
+
+libs\LibWindow-1.1\LibWindow-1.1.lua
+#@end-no-lib-strip@
+
+libs\LibItemCache-1.1\LibItemCache-1.1.xml
+libs\LibItemSearch-1.0.lua
+
+Frame.xml
+
+Localization.lua
+Inventorian.lua
+Events.lua
+
+Frame.lua
+ItemContainer.lua
+Item.lua
+Bag.lua

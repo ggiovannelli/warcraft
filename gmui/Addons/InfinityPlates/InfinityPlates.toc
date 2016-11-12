@@ -1,6 +1,0 @@
-## Interface: 60200
-## Author: Dawn
-## Title: InfinityPlates
-## Version: r11
-## Notes: numberized nameplate addon
-InfinityPlates.lua

@@ -1,0 +1,12 @@
+tag 7.0.3.4
+366a7dbb0689bd89810fd292f75487975e97e1b1
+Hendrik Leppkes <h.leppkes@gmail.com>
+2016-08-28 03:30:11 +0200
+
+Tag as 7.0.3.4
+
+
+--------------------
+
+Hendrik Leppkes:
+	- Sync cachedView property anytime the frame is updated

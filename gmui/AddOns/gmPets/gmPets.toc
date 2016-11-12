@@ -1,0 +1,12 @@
+## Interface: 70100
+## Title: gmPets
+## Notes: Randomly select a companion from your collection or from custom categories.
+## Author: Axilea, Nemesis(it)
+## Version: 1.0-2016102601
+
+libs\LibPetJournal-2.0\LibStub.lua
+libs\LibPetJournal-2.0\CallbackHandler-1.0.lua
+libs\LibPetJournal-2.0\LibPetJournal-2.0.lua
+
+core.lua
+categories.lua

@@ -1,0 +1,16 @@
+2016-10-25  Tercio  <Tercio>
+
+[30b33a861546] [tip]
+* StopResetingMyCameraPlease.lua, StopResetingMyCameraPlease.toc:
+
+- update for 7.1.0
+
+
+2016-08-11  Tercio  <Tercio>
+
+[eccf720b78a6]
+* StopResetingMyCameraPlease.lua, StopResetingMyCameraPlease.toc:
+
+- hello world (of warcraft).
+
+

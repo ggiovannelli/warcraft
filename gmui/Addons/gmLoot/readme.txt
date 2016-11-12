@@ -1,3 +1,12 @@
+v1.0-2016102601
+- bump toc
+
+v1.0-2016090201
+- autoloots now currencies as well with coins
+
+v1.0-2016072301
+- bump toc for vers.7
+
 v1.0-2015100301
 - tons of best practice code rewriting. 
 thanks to Phanx, you can check all of them here:

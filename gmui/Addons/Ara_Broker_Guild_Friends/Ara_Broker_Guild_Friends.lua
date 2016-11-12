@@ -89,7 +89,7 @@ local wipe, next, GetGuildRosterInfo, GetGuildRosterShowOffline, GetFriendInfo, 
 --Renamed in legion
 local BNGetToonInfo = BNGetGameAccountInfo or BNGetToonInfo
 --Not renamed in legion yet but might be
-local BNGetFriendInfo, BNGetNumFriends, BNGetFriendInfoByID = BNGetFriendInfo, BNGetNumFriends, BNGetFriendInfoByID
+local BNGetFriendInfo, BNGetNumFriends = BNGetFriendInfo, BNGetNumFriends
 
 local colpairs = { ["class"] = 1, ["name"] = 2, ["level"] = 3, ["zone"] = 4, ["note"] = 5, ["status"] = 6, ["rank"] = 7 }
 

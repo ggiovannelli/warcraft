@@ -1,5 +1,0 @@
-<Bindings>
-	<Binding name="BROKER_WINDOWDEDMODE_TOGGLE" header="BROKER_WINDOWEDMODE">
-		Broker_WindowedMode:ToggleWindowedMode()
-	</Binding>
-</Bindings>

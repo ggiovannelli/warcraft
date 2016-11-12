@@ -1,0 +1,12 @@
+## Interface: 70100
+## Title: gmAutopsy
+## Notes: Another minimal fatality-like addon
+## Author: Axilea, Nemesis(it)
+## Version: v1.0-2016102601
+## SavedVariables: AUTOPSY_ENABLE, AUTOPSY_OUTCHN, AUTOPSY_OUTNAM
+
+libs\LibStub.lua
+libs\CallbackHandler-1.0.lua
+libs\LibDataBroker-1.1.lua
+
+core.lua

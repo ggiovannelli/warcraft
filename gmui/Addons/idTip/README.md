@@ -7,12 +7,12 @@ Adds IDs to the ingame tooltips.
 ### Supported Types
 - Spell
 - Item
-- Glyph
 - NPC
 - Quest
 - Talent
 - Achievement
 - Pet Ability
+- Artifact Power
 
 Please report any requests/bugs through an [issue](https://github.com/silverwind/idTip/issues/new) on GitHub.
 

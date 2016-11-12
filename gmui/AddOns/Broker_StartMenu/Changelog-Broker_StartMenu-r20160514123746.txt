@@ -1,0 +1,55 @@
+Eyal Solnik:
+	- Fix few issues
+	- EncounterJournal_LoadUI is now correctly assigned to EncounterJournal.
+	
+	- The PvP frame is now opened securely.
+	
+	- Update EasyDisplay comments.
+	- Rename loc to locale and change directories to title case
+	- Update Libra to v37
+	- Update interface to 70000 (legion)
+	- Update the project url
+	- Update license, version number and website
+	- Change last name and license year.
+	- Add readme file
+	- Add license file
+	- Update ToC and Libra
+	- Update ToC to 60200
+	- Update Libra to v36
+	- Rename functions
+Eyal Shilony:
+	- Update Libra to v34.
+	- Add key bindings option. (off by default.)
+	Wrapped all of the function calls in EasyDisplay lib
+	so when 3rd-party addons hook Blizzard's API
+	it will call to the latest version that is
+	the modified (hooked) function rather than the original function.
+	- Fix all the interfaces, they should work correctly now.
+	- Fix accessibility so the correct interfaces will open when clicking on the addon's broker display.
+	Filtered secured items out of the accessibility dropdowns.
+	
+	Due to limitation in the game
+	some items cannot be opened securely from the menu during combat
+	so these items will be disabled once in combat.
+	
+	When in combat the addon will change its text to "In Combat".
+	- Remove the secure buttons overlay, the default dropdown was replaced with Libra's dropdown. --Fixed by Lombra.
+	Update EasyDisplay because we really don't need to make extra calls. ;)
+	- Upgrade Ace3 libs to the latest version.
+	Add a secure buttons overlay so we can execute secure actions.
+	
+	Altering profiles will reload the UI immediately once executed.
+	- Rename Mounts and Pets to Collections.
+	- Fix profiles.
+	Update the default menu so it will match the default MicroMenu,
+	
+	Remove interfaces that no longer exist in the game.
+	
+	Add new interfaces like Shops and Addons.
+	- Upgrade Libra to latest (modified) version.
+	- Fix a bug in Libra.
+	- Complete rewrite of my old addon LonnyMenu.
+	Change the way you sort and manage the menu in the options.
+	
+	Replace AceGui, AceConfig and AceDbOptions libraries with Libra.
+	- Initial commit.

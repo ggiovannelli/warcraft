@@ -1,4 +1,4 @@
-## Interface: 60200
+## Interface: 70100
 ## Title: tullaRange Config
 ## Notes: GUI based configuration for tullaRange
 ## Author: Tuller

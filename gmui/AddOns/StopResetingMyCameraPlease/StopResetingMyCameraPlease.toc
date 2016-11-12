@@ -1,0 +1,9 @@
+## Interface: 70100
+## Title: Stop Reseting My Camera Please
+## Notes: Set the camera to max distance
+## X-Curse-Packaged-Version: r1
+## X-Curse-Project-Name: Stop Reseting My Camera Zoom Please
+## X-Curse-Project-ID: stop-reseting-my-camera-please
+## X-Curse-Repository-ID: wow/stop-reseting-my-camera-please/mainline
+
+StopResetingMyCameraPlease.lua

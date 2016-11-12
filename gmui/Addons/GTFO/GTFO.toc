@@ -1,11 +1,11 @@
-## Interface: 60200
+## Interface: 70100
 ## Title: GTFO
 ## Notes: GTFO, you're dying!
 ## Author: Zensunim of Dragonblight
-## Version: 4.37.6
+## Version: 4.41.3
 ## DefaultState: Enabled
 ## SavedVariables: GTFOData
-## X-Curse-Packaged-Version: 4.37.6
+## X-Curse-Packaged-Version: 4.41.3
 ## X-Curse-Project-Name: GTFO
 ## X-Curse-Project-ID: gtfo
 ## X-Curse-Repository-ID: wow/gtfo/mainline
@@ -32,6 +32,7 @@ GTFO_Spells_BC.lua
 GTFO_Spells_LK.lua
 GTFO_Spells_CAT.lua
 GTFO_Spells_MP.lua
+GTFO_Spells_LGN.lua
 GTFO_Spells_Special.lua
 GTFO_Fail_Generic.lua
 GTFO_Fail_Classic.lua
@@ -39,9 +40,11 @@ GTFO_Fail_BC.lua
 GTFO_Fail_LK.lua
 GTFO_Fail_CAT.lua
 GTFO_Fail_MP.lua
+GTFO_Fail_LGN.lua
 GTFO_FF_BC.lua
 GTFO_FF_LK.lua
 GTFO_FF_CAT.lua
 GTFO_FF_MP.lua
+GTFO_FF_LGN.lua
 GTFO_Mobs.lua
 GTFO.xml

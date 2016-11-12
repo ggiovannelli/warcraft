@@ -1,4 +1,4 @@
-## Interface: 60200
+## Interface: 70000
 ## X-Min-Interface: 60200
 ## Title: Ara - Broker - Guild & Friends
 ## Version: r75

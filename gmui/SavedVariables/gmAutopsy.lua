@@ -1,0 +1,9 @@
+
+AUTOPSY_ENABLE = 1
+AUTOPSY_OUTCHN = 1
+AUTOPSY_OUTNAM = {
+	"SELF", -- [1]
+	"GROUP", -- [2]
+	"GUILD", -- [3]
+	"OFFICER", -- [4]
+}

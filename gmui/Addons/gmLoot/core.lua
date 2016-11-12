@@ -52,7 +52,8 @@ frame:SetScript("OnEvent", function(self, event, ...)
 					local _,_,_,_,locked,isQuestItem = GetLootSlotInfo(slot)
 					if isQuestItem == true and not locked and GMLOOT["QUEST"] == true then
 						LootSlot(slot);
-					elseif GetLootSlotType(slot) == LOOT_SLOT_MONEY and not locked and GMLOOT["COINS"] == true then
+					-- elseif GetLootSlotType(slot) == LOOT_SLOT_MONEY and not locked and GMLOOT["COINS"] == true then
+					elseif GetLootSlotType(slot) > 1 and not locked and GMLOOT["COINS"] == true then
 						LootSlot(slot);
 					end
 			end			  
@@ -93,9 +94,9 @@ function dataobj.OnTooltipShow(tooltip)
 	end	
 
 	if GMLOOT["COINS"] == true then 
-		tooltip:AddDoubleLine("AutoLoot coins", "YES", 1,1,1,0,1,0)
+		tooltip:AddDoubleLine("AutoLoot coins / currencies", "YES", 1,1,1,0,1,0)
 	else
-		tooltip:AddDoubleLine("AutoLoot coins", "NO", 1,1,1,1,0,0)
+		tooltip:AddDoubleLine("AutoLoot coins / currencies", "NO", 1,1,1,1,0,0)
 	end
 	
 	if GMLOOT["QUEST"] == true then 

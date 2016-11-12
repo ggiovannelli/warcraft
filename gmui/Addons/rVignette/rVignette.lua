@@ -1,35 +1,35 @@
 
-  -- // rVignette
-  -- // zork - 2014
+-- rVignette: core
+-- zork, 2016
 
-  -----------------------------
-  -- VARIABLES
-  -----------------------------
+-----------------------------
+-- Variables
+-----------------------------
 
-  local an, at = ...
+local A, L = ...
 
-  local addon = CreateFrame("Frame")
-  addon.vignettes = {}
+-----------------------------
+-- Functions
+-----------------------------
 
-  -----------------------------
-  -- FUNCTIONS
-  -----------------------------
+local function OnVignetteAdded(self,event,id)
+  if not id then return end
+  self.vignettes = self.vignettes or {}
+  if self.vignettes[id] then return end
+  local x, y, name, icon = C_Vignettes.GetVignetteInfoFromInstanceID(id)
+  local left, right, top, bottom = GetObjectIconTextureCoords(icon)
+  PlaySoundFile("Sound\\Interface\\RaidWarning.ogg")
+  local str = "|TInterface\\MINIMAP\\ObjectIconsAtlas:0:0:0:0:256:256:"..(left*256)..":"..(right*256)..":"..(top*256)..":"..(bottom*256).."|t"
+  RaidNotice_AddMessage(RaidWarningFrame, str..name.." spotted!", ChatTypeInfo["RAID_WARNING"])
+  print(str..name,"spotted!")
+  self.vignettes[id] = true
+end
 
-  local function OnEvent(self,event,id)
-    if id and not self.vignettes[id] then
-      local x, y, name, icon = C_Vignettes.GetVignetteInfoFromInstanceID(id)
-      local left, right, top, bottom = GetObjectIconTextureCoords(icon)
-      PlaySoundFile("Sound\\Interface\\RaidWarning.wav")
-      local str = "|TInterface\\MINIMAP\\OBJECTICONS:0:0:0:0:256:256:"..(left*256)..":"..(right*256)..":"..(top*256)..":"..(bottom*256).."|t"
-      RaidNotice_AddMessage(RaidWarningFrame, str..(name or "Unknown").." spotted!", ChatTypeInfo["RAID_WARNING"])
-      print(str..name,"spotted!")
-      self.vignettes[id] = true
-    end
-  end
+-----------------------------
+-- Init
+-----------------------------
 
-  -----------------------------
-  -- REGISTER/CALL
-  -----------------------------
-
-  addon:RegisterEvent("VIGNETTE_ADDED")
-  addon:SetScript("OnEvent", OnEvent)
+--eventHandler
+local eventHandler = CreateFrame("Frame")
+eventHandler:RegisterEvent("VIGNETTE_ADDED")
+eventHandler:SetScript("OnEvent", OnVignetteAdded)

@@ -137,19 +137,19 @@ function dataobj.OnTooltipShow(tooltip)
 	tooltip:AddDoubleLine("Right Click", "Toggle short LDB display")
 	tooltip:AddDoubleLine("Middle Click", "Toggle text mode")
 	tooltip:AddLine(" ")
-	tooltip:AddDoubleLine("/gmm", "For cli mode", 1,1,1,1,1,1)
+	tooltip:AddDoubleLine("/gmmoney", "For cli mode", 1,1,1,1,1,1)
 
 end
 
-SLASH_GMMONEY1 = "/gmm"
+SLASH_GMMONEY1 = "/gmmoney"
 SlashCmdList["GMMONEY"] = function(args) 	
 
 	local name=SecureCmdOptionParse(args)
 		
 	if name == "" then 
 		print(prgname .. " help")
-		print("/gmm name - Remove a pg of this realm from DB")
-		print("/gmm RESET! - Reset the DB ('RESET!' is case sensitive)")
+		print("/gmmoney name - Remove a pg of this realm from DB")
+		print("/gmmoney RESET! - Reset the DB ('RESET!' is case sensitive)")
 		return
 	
 	elseif  name == "RESET!" then 

@@ -1,0 +1,7 @@
+## Interface: 70000
+## Title: gmHideQuestTracking
+## Notes: Disable QuestTrackingTooltips while in raid and in combat
+## Author: Axilea, Nemesis(it)
+## Version: v1.0-2016100801
+
+core.lua

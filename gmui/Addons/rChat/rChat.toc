@@ -1,11 +1,6 @@
-## Interface: 60000
+## Interface: 70100
 ## Author: zork
 ## Title: rChat
-## Notes: Simple Chatmod
+## Notes: Chat enhancements
 
-config.lua
-core\core.lua
-core\scroll.lua
-core\channelreplacements.lua
-core\altinvite.lua
-core\urlcopy.lua
+core.lua

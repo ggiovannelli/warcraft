@@ -1,0 +1,12 @@
+## Interface: 70100
+## Version: v1.2.1
+## Title: HideOrderHallBar
+## Notes: Hides the Order Hall Command Bar
+## LoadOnDemand: 1
+## LoadWith: Blizzard_OrderHallUI
+## X-Curse-Packaged-Version: v1.2.1
+## X-Curse-Project-Name: HideOrderHallBar
+## X-Curse-Project-ID: hideorderhallbar
+## X-Curse-Repository-ID: wow/hideorderhallbar/mainline
+
+HideOrderHallBar.lua

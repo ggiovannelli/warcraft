@@ -1,31 +1,6 @@
---[[
-	Copyright (c) 2015 Eyal Solnik <Lynxium>
-
-	Permission is hereby granted, free of charge, to any person obtaining
-	a copy of this software and associated documentation files (the
-	"Software"), to deal in the Software without restriction, including
-	without limitation the rights to use, copy, modify, merge, publish,
-	distribute, sublicense, and/or sell copies of the Software, and to
-	permit persons to whom the Software is furnished to do so, subject to
-	the following conditions:
-
-	The above copyright notice and this permission notice shall be
-	included in all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-	EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-	MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-	NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-	LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-	OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-	WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-	
-	-- A library that provides API to display the game interfaces.
-]]
-
 assert(LibStub, "EasyDisplay-1.0 requires LibStub")
 
-local lib, minor = LibStub:NewLibrary("EasyDisplay-1.0", 12)
+local lib, minor = LibStub:NewLibrary("EasyDisplay-1.0", 13)
 if not lib then return end
 minor = minor or 0
 
@@ -40,44 +15,41 @@ local BAGS = "Bags"
 local CALENDAR = "Calendar"
 local CHARACTER_MSG = "|cffFFFF00Cannot display interface '%s' because the character level is too low.|r"
 
---[[ MANAGED FRAMES ]]
-
--- Determines whether the GameMenuFrame should be hidden when closing one of the listed interfaces.
-GameMenu_OptionFrames = {
-	["VideoOptionsFrame"] = true,
-	["AudioOptionsFrame"] = true,
-	["InterfaceOptionsFrame"] = true,
-	["MacOptionsFrame"] = true,
-	["KeyBindingFrame"] = true,
-	["AddonList"] = true,
-}
-
--- Must be loaded before the interface is displayed.
-LoD_AddonFrames = {
-	["PlayerTalentFrame"] = TalentFrame_LoadUI,
-	["AchievementFrame"] = AchievementFrame_LoadUI,
-	["CalendarFrame"] = Calendar_LoadUI,
-	["KeyBindingFrame"] = KeyBindingFrame_LoadUI,
-	["MacroFrame"] = MacroFrame_LoadUI,
-	["TimeManagerFrame"] = TimeManager_LoadUI,
-	["GuildFrame"] = GuildFrame_LoadUI,
-	["EncounterJournal"] = EncounterJournal_LoadUI(),
-}
-
---[[ PREDEFINED INTERFACES ]]
+--[[ INTERFACES ]]
 
 --[[
-	name - (string) The name to access the interface.
-	title - (string) The title that represents the interface.
-	alias - (string) An optional name to access the interface.
-	frameName - (string) The name of the frame as it appears in the UIPanelWindows table to manage the display or the name of the frame as it appears in the ProtectedFrames table.
-	button (frame) - The button to click to open the interface.
-	level - (number) The minimum level of the player required to display the interface.
-	func - (function) The function (handler) to display the interface.
-	special - (boolean) Requires special handling before it can be displayed so it's recommended to use the DisplayInterface api to show the interface.
-	secure - (boolean) Determines whether it needs to be opened from a secure context.
-	command - (string) The name of the command for key bindings.
+	name (string) 
+	The name to access the interface.
+	
+	title (string)
+	A human-readable name that describes the interface.
+	
+	alias (string)
+	An optional name to access the interface.
+	
+	frameName (string) 
+	The name of the frame as it appears in the UIPanelWindows table
+	or the name of the frame as it appears in the ProtectedFrames table.
+	
+	button (frame)
+	The button that responsible to open the interface in the default UI.
+	
+	level (number) 
+	The minimum level that is required to display the interface to the player.
+	
+	func (function)
+	The function that responsible to display the interface.
+	
+	special (boolean)
+	Indicates that it requires special handling before it can be displayed.
+	
+	secure (boolean)
+	Indicates that it needs to be opened from a secure context.
+	
+	command (string)
+	The name of the command for key bindings.
 ]]
+
 local interfaces = {
 	{
 		name = "achievements",
@@ -294,7 +266,8 @@ local interfaces = {
 		title = PLAYER_V_PLAYER,
 		frameName = "PVPFrame",
 		level = SHOW_PVP_LEVEL,
-		--button = PVPMicroButton,
+		button = PVPMicroButton,
+		secure = true,
 		func = function() TogglePVPUI() end,
 	},
 	{
@@ -380,17 +353,6 @@ end
 
 table.sort(interfaces, comp)
 
-local count = #interfaces
-
--- Hides the GameMenuFrame and resets the hideMenu flag.
--- The hideMenu flag dictates whether the GameMenuFrame should be hidden rather than opened when the interface is closed.
-local function hideUIPanel(self)
-	if self.hideMenu then
-		HideUIPanel(GameMenuFrame)
-		self.hideMenu = nil
-	end
-end
-
 --[[ APIs ]]
 
 --[[ GetInterface(name) - Gets the interface by a given name, alias or title.
@@ -403,6 +365,7 @@ end
 	index - (number) The index of interface in the table.
 	
 ]]
+
 function lib:GetInterface(name)
 	local interface, index  = nil, 0
 	if  name and type(name) == "string" then
@@ -426,6 +389,7 @@ end
 	interface - (table) The interface entry.
 	
 ]]
+
 function lib:GetInterfaceByIndex(index)
 	local interface
 	if  index and type(index) == "number" then
@@ -440,6 +404,7 @@ end
 	iterator - (function) An iterator to traverse over the interfaces.
 	
 ]]
+
 function lib:Interfaces()
 	return ipairs(interfaces)
 end
@@ -450,10 +415,12 @@ end
 	iterator - (function) An iterator to traverse over the interfaces.
 	
 ]]
+
+local count = #interfaces
+
 function lib:InterfacesCount()
 	return count
 end
-
 
 --[[ DisplayInterface(name) - Displays the interface.
 
@@ -461,6 +428,38 @@ end
 	name - (string) The key, alias  or title of the interface to display.
 	
 ]]
+
+-- A list of all the interfaces that require the GameMenuFrame to be closed before opening them.
+GameMenu_OptionFrames = {
+	["VideoOptionsFrame"] = true,
+	["AudioOptionsFrame"] = true,
+	["InterfaceOptionsFrame"] = true,
+	["MacOptionsFrame"] = true,
+	["KeyBindingFrame"] = true,
+	["AddonList"] = true
+}
+
+-- A list of all of the interfaces that must be loaded before they can be displayed.
+LoD_AddonFrames = {
+	["PlayerTalentFrame"] = TalentFrame_LoadUI,
+	["AchievementFrame"] = AchievementFrame_LoadUI,
+	["CalendarFrame"] = Calendar_LoadUI,
+	["KeyBindingFrame"] = KeyBindingFrame_LoadUI,
+	["MacroFrame"] = MacroFrame_LoadUI,
+	["TimeManagerFrame"] = TimeManager_LoadUI,
+	["GuildFrame"] = GuildFrame_LoadUI,
+	["EncounterJournal"] = EncounterJournal_LoadUI
+}
+
+-- Hides the GameMenuFrame and resets the hideMenu flag.
+-- The hideMenu flag dictates whether the GameMenuFrame should be hidden when the interface is closed.
+local function hideUIPanel(self)
+	if self.hideMenu then
+		HideUIPanel(GameMenuFrame)
+		self.hideMenu = nil
+	end
+end
+
 function lib:DisplayInterface(name)
 	local interface = self:GetInterface(name)
 	if interface and interface.func and type(interface.func) == "function" then
@@ -488,7 +487,7 @@ function lib:DisplayInterface(name)
 			-- Display the interface.
 			interface.func()
 			
-			-- This keeps the GameMenuFrame hidden when an interface was opened through this action.
+			-- This hides the GameMenuFrame when the interface is opened through this function.
 			if GameMenu_OptionFrames[interface.frameName] then
 				local frame = _G[interface.frameName]
 				if frame then
@@ -497,7 +496,7 @@ function lib:DisplayInterface(name)
 				GameMenu_OptionFrames[interface.frameName] = nil
 			end
 			
-		-- The interface does not have a frameName entry so just run the function.
+		-- The interface does not have a frameName entry so just run the function to display it.
 		else
 			interface.func()
 		end
