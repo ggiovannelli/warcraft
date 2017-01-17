@@ -1,8 +1,8 @@
 ## Interface: 70100
 ## Author: Axilea
-## Version: 1.0-2016102801
+## Version: 1.0-2016112401
 ## Title: rActionBar_Gm
-## Notes: A 2 rows bars layout for rActionBar
+## Notes: A 2 ONLY rows bars layout for rActionBar
 ## RequiredDeps: rActionBar
 
 layout.lua

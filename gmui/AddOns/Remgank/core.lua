@@ -107,6 +107,7 @@ function RemGank_Record_Player(name, note)
 	
 	RemGank_DB_Dump()
 	RemGank_ListFrame_Update(RemGank_conf_scrollFrame)
+
 	
 end
 
@@ -121,7 +122,10 @@ end
 
 -- Various Checks.
 function RemGank_Check_Player(name)
-		
+	
+	-- alert nearby friend players (!!! not possible when I am dead)
+	-- SendChatMessage("Attention to ganker: " .. name, "YELL")
+	
 	-- alert my guild mates if option is set
 	if REMGANK_GUILD_ANNOUNCE == true then 
 		SendChatMessage("REMGANK: " .. string_format(RemGank_guild_alert[random(1,#RemGank_guild_alert)] , UnitName("player"), name, GetZoneText() .. "/" .. GetSubZoneText()) , "GUILD")
@@ -135,7 +139,10 @@ function RemGank_Check_Player(name)
 	else -- update only record.
 		print(string_format("%s: [%s] already present. skip popup, updating record", prgname, name))
 		RemGank_Record_Player(name)
-	end 
+	end
+	
+	
+	
 end 
 
 -- Function to dump DB to the listnames

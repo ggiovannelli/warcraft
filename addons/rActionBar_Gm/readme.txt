@@ -1,3 +1,12 @@
+v1.0-2016112001
+- Reduced the buttons size a little bit
+
+v1.0-2016111701
+- Removed the cooldown spiral (hopefully)
+
+v1.0-2016111501
+- Removed bar3
+
 v1.0-2016102601
 - bump toc
 - modify it a little bit

@@ -5,18 +5,7 @@ SkadaDB = {
 		},
 	},
 	["profileKeys"] = {
-		["Mikim - Nemesis"] = "Default",
-		["Nomia - Nemesis"] = "Default",
-		["Frostanzo - Nemesis"] = "Default",
-		["Aixia - Nemesis"] = "Default",
-		["Gimbolino - Nemesis"] = "Default",
-		["Isuke - Nemesis"] = "Default",
-		["Ewe - Nemesis"] = "Default",
-		["Febe - Nemesis"] = "Default",
-		["Axilea - Nemesis"] = "Default",
-		["Eudore - Nemesis"] = "Default",
-		["Ixi - Nemesis"] = "Default",
-		["Iwi - Nemesis"] = "Default",
+	
 	},
 	["profiles"] = {
 		["Default"] = {
@@ -67,19 +56,7 @@ SkadaDB = {
 				["channel"] = "officer",
 				["mode"] = "Cure",
 			},
-			["columns"] = {
-				["Minaccia_Threat"] = false,
-				["Danno subito_Percent"] = false,
-				["Danno_DPS"] = false,
-				["Cure ricevute_Percent"] = false,
-				["Dettaglio incantesimi di danno_Percent"] = false,
-				["Cure_Percent"] = false,
-				["Cure_HPS"] = false,
-				["Cure ricevute_HPS"] = false,
-				["Cure totali_Total"] = false,
-				["Danno_Percent"] = false,
-				["Danno subito_DTPS"] = false,
-			},
+
 			["onlykeepbosses"] = true,
 			["reset"] = {
 				["leave"] = 2,

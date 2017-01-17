@@ -6,7 +6,7 @@ local prgname = "gmBagsSlots"
 local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
 local dataobj = ldb:NewDataObject("gmBagsSlots", {
 	type = "data source",
-	icon = "Interface\\Icons\\Inv_misc_bag_10",
+	icon = "Interface\\Addons\\"..ADDON.."\\icon.tga",
 	text = "-",
 })
 

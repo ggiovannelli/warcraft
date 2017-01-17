@@ -31,6 +31,7 @@ L.C.pet = {
         {"RIGHT",-2,0},
       },
       size = 16,
+	  outline = "","",
       align = "CENTER",
       tag = "[name]",
     },

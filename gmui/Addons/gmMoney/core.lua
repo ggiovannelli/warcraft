@@ -38,13 +38,11 @@ end
 local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
 local dataobj = ldb:NewDataObject("gmMoney", {
 	type = "data source",
-	icon = "Interface\\MoneyFrame\\UI-GoldIcon",
+	icon = "Interface\\Addons\\"..ADDON.."\\icon.tga",
 	text = "none yet"
 })
 
 local function UpdateLDB()
-
-	dataobj.icon = "Interface\\MoneyFrame\\UI-GoldIcon"
 
 	if GMMONEYSET["TEXTMODE"] == false and GMMONEYSET["FULLDISP"] == false then
 		dataobj.text = string_format("%d", GMMONEY[realmName][playerName]["GOLD"] / 10000)

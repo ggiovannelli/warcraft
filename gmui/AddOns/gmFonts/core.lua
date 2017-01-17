@@ -195,7 +195,7 @@ if LSM then
 	
 	
 	-- 	Expressway is a sans-serif font family inspired by the U.S. Department 
-	--  of Transportation’s FHWA Series of Standard Alphabets. 
+	--  of Transportationï¿½s FHWA Series of Standard Alphabets. 
 	--  For the second half of the 20th Century, it was the font most used on road signs in U.S.,
 	--  Canada, Mexico, Australia, Spain,Venezuela,the Netherlands, Brazil, Argentina, Taiwan, 
 	--  Malaysia, Indonesia, India, Mongolia and New Zealand.
@@ -236,8 +236,13 @@ if LSM then
 	LSM:Register("font", "Ubuntu Light", fontpath .. "Ubuntu-L.ttf")	
 	LSM:Register("font", "Ubuntu Light Italic", fontpath .. "Ubuntu-LI.ttf")
 	LSM:Register("font", "Ubuntu Medium", fontpath .. "Ubuntu-M.ttf")	
-	LSM:Register("font", "Ubuntu Medium Italic", fontpath .. "Ubuntu-MI.ttf")	
+	LSM:Register("font", "Ubuntu Medium Italic", fontpath .. "Ubuntu-MI.ttf")
 	
+	LSM:Register("font", "Ubuntu Mono", fontpath .. "UbuntuMono-R.ttf")
+	LSM:Register("font", "Ubuntu Mono Italic", fontpath .. "UbuntuMono-RI.ttf")
+	LSM:Register("font", "Ubuntu Mono Bold", fontpath .. "UbuntuMono-B.ttf")
+	LSM:Register("font", "Ubuntu Mono Bold Italic", fontpath .. "UbuntuMono-BI.ttf")
+
 	-- Comic Neue is a casual script typeface released in 2014. It was designed 
 	-- by Craig Rozynski as a more modern, refined version of the ubiquitous, 
 	-- but frequently criticised typeface, Comic Sans.
@@ -279,7 +284,7 @@ if LSM then
 	
 	
 	-- Lato is a sans serif typeface family started in the summer of 2010 by Warsaw-based designer Lukasz Dziedzic 
-	-- (“Lato” means “Summer” in Polish). In December 2010 the Lato family was published under the Open Font License 
+	-- (Lato means Summer in Polish). In December 2010 the Lato family was published under the Open Font License 
 	-- by his foundry tyPoland, with support from Google. 
 	-- The Lato font family is available as a free download under the SIL Open Font License 1.1. 
 	-- The fonts can be used without any limitations for commercial and non-commercial purposes. 
@@ -289,8 +294,29 @@ if LSM then
 	LSM:Register("font", "Lato Bold", fontpath .. "Lato-Bold.ttf")
 	LSM:Register("font", "Lato Italic", fontpath .. "Lato-Italic.ttf")
 	LSM:Register("font", "Lato Bold Italic", fontpath .. "Lato-BoldItalic.ttf")
-	LSM:Register("font", "Lato Thin", fontpath .. "Lato-Thin.ttf")
+	LSM:Register("font", "Lato Thin", fontpath .. "Lato-Thin.ttf") 
+		
+	-- "The Happy Giraffe" is a font free for personal and charity use by Misti (https://mistifonts.com/)
+	-- http://www.dafont.com/the-happy-giraffe.font
+	LSM:Register("font", "Happy Giraffe", fontpath .. "The Happy Giraffe Demo.ttf")
 
+	-- "Ladybug Love" is a font free for personal and charity use by Misti (https://mistifonts.com/)
+	-- http://www.dafont.com/ladybug-love.font
+	LSM:Register("font", "Lady Bug", fontpath .. "Ladybug Love Demo.ttf")
+	
+	-- Droid is a font family first released in 2007 and created by Ascender Corporation for use by 
+	-- the Open Handset Alliance platform Android[1] and licensed under the Apache License. 
+	-- The fonts are intended for use on the small screens of mobile handsets and were designed 
+	-- by Steve Matteson of Ascender Corporation. 
+	-- The name was derived from the Open Handset Alliance platform named Android
+	LSM:Register("font", "Droid Sans Mono", fontpath .. "DroidSansMono.ttf")
+
+	
+	LSM:Register("font", "AD Mono", fontpath .. "a_d_mono.ttf")
+
+	LSM:Register("font", "Terminus", fontpath .. "Terminus.ttf")
+	LSM:Register("font", "Terminus Bold", fontpath .. "TerminusBold.ttf")
+	
 	
 end
 
@@ -341,11 +367,11 @@ end
 
 local textgmfonts = options:CreateFontString("$parentTitle", "ARTWORK", "GameFontNormal")
 textgmfonts:SetPoint("TOPLEFT", 230, -80)
-textgmfonts:SetText("My Sets")
+textgmfonts:SetText("gmFonts sets")
 options.textgmfonts = textgmfonts
  
 local gmlistfonts = {} 
-local gmlistfonts = {"Ubuntu", "Ubuntu Light","Carlito", "PT Sans", "ComicNeue", "Candara", "Verdana", "Laurel", "Lato"}
+local gmlistfonts = {"Ubuntu", "Ubuntu Mono", "Ubuntu Light","Carlito", "PT Sans", "ComicNeue", "Candara", "Verdana", "Laurel", "Lato"}
 
 local dropdown2 = PCD:New(options)
 dropdown2:SetPoint("TOPLEFT", 230, -80)
@@ -354,6 +380,7 @@ function dropdown2:OnValueChanged(text)
    
    	local gmfontset = {}
 	gmfontset["Ubuntu"] = {"Ubuntu-R.ttf", "Ubuntu-B.ttf", "Ubuntu-BI.ttf", "Ubuntu-RI.ttf"}
+	gmfontset["Ubuntu Mono"] = {"UbuntuMono-R.ttf", "UbuntuMono-B.ttf", "UbuntuMono-BI.ttf", "UbuntuMono-RI.ttf"}
 	gmfontset["Ubuntu Light"] = {"Ubuntu-L.ttf", "Ubuntu-M.ttf", "Ubuntu-MI.ttf", "Ubuntu-L.ttf"}
 	gmfontset["Carlito"] = {"Carlito-Regular.ttf", "Carlito-Bold.ttf", "Carlito-BoldItalic.ttf", "Carlito-Italic.ttf"}
 	gmfontset["PT Sans"] = {"PT_Sans-Web-Regular.ttf", "PT_Sans-Web-Bold.ttf", "PT_Sans-Web-BoldItalic.ttf", "PT_Sans-Web-Italic.ttf"}
@@ -401,12 +428,16 @@ textdefaultnr:SetPoint("TOPLEFT", 16, -240)
 textdefaultnr:SetText(string_format("|cffffffff%s|r : %s","Numbers",GMFONTS["NR"] ))
 options.textdefaultnr = textdefaultnr
 
+local textadvice = options:CreateFontString("$parentTitle", "ARTWORK", "GameFontNormal")
+textadvice:SetPoint("TOPLEFT", 16, -280)
+textadvice:SetText(string_format("|cffffffff%s|r : %s","Hint","Reload UI after a font change..."))
+options.textadvice = textadvice
 
 -- WoW Default Fonts Button
 local gmfonts_def_button = CreateFrame("button", gmfonts_def_button, options, "UIPanelButtonTemplate")
 gmfonts_def_button:SetHeight(BUTTON_HEIGHT)
 gmfonts_def_button:SetWidth(BUTTON_WIDTH)
-gmfonts_def_button:SetPoint("TOPLEFT", 16, -280)
+gmfonts_def_button:SetPoint("TOPLEFT", 16, -320)
 gmfonts_def_button:SetText("WoW Default")
 gmfonts_def_button.tooltipText = "BEWARE: Silently initialize your fonts to default and reload your UI"
 gmfonts_def_button:SetScript("OnClick",  
@@ -421,7 +452,7 @@ gmfonts_def_button:SetScript("OnClick",
 local gmfonts_rld_button = CreateFrame("button", gmfonts_rld_button, options, "UIPanelButtonTemplate")
 gmfonts_rld_button:SetHeight(BUTTON_HEIGHT)
 gmfonts_rld_button:SetWidth(BUTTON_WIDTH)
-gmfonts_rld_button:SetPoint("TOPLEFT", 180, -280)
+gmfonts_rld_button:SetPoint("TOPLEFT", 180, -320)
 gmfonts_rld_button:SetText("Reload UI")
 gmfonts_rld_button.tooltipText = "Reload your UI"
 gmfonts_rld_button:SetScript("OnClick",  

@@ -25,10 +25,10 @@
 ## Notes-zhTW: Notifies you about common raid cooldowns.
 
 ## Author: Funkydude, Nebula169
-## Version: v7.1.1
+## Version: v7.1.2
 ## X-Category: Raid
 ## X-License: All Rights Reserved: You are free to fork and modify on GitHub, please ask us about anything else.
-## X-Curse-Project-ID: big-wigs_common-auras
+## X-Curse-Project-ID: 13530
 ## X-WoWI-ID: 23611
 ## Dependencies: BigWigs
 

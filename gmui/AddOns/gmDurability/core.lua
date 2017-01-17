@@ -108,7 +108,7 @@ frame:SetScript("OnEvent", function(self, event, ...)
 				table_insert(durabilities, tostring(string_format("%d", (durability/maxdurability)*100)))
 				mindurability = math_min(durability/maxdurability, mindurability)		  
 			else
-				table_insert(durabilities, "-")
+				table_insert(durabilities, "100")
 			end
 		end	
 		
@@ -201,15 +201,9 @@ function dataobj.OnTooltipShow(tooltip)
 		
 		if GetInventoryItemLink("player", GetInventorySlotInfo(slots[idx])) then 			
 			
-			local tempdurability
-			
-			if durabilities[idx] == "-" then				
-				tempdurability = 5
-			else
-				tempdurability = colorperc(tonumber(durabilities[idx]/100))
-			end								
+			local tempdurability = colorperc(tonumber(durabilities[idx]/100))
 						
-			if idx >= 14 and HasArtifactEquipped() then 				
+			if idx > 14 and HasArtifactEquipped() then 				
 				GetDetailedItemLevel = ailv
 			else			
 				GetDetailedItemLevel = GetDetailedItemLevelInfo(GetInventoryItemLink("player", GetInventorySlotInfo(slots[idx])))
@@ -225,7 +219,10 @@ function dataobj.OnTooltipShow(tooltip)
 			
 			end
 
-			tooltip:AddDoubleLine(GetDetailedItemLevel .. " - " .. unescape(GetInventoryItemLink("player",GetInventorySlotInfo(slots[idx]))),string_format(format_color, text_color[tempdurability][1]*255, text_color[tempdurability][2]*255,text_color[tempdurability][3]*255, durabilities[idx]).."|r")
+			tooltip:AddDoubleLine(GetDetailedItemLevel .. " - " .. unescape(GetInventoryItemLink("player",GetInventorySlotInfo(slots[idx]))), string_format(format_color, text_color[tempdurability][1]*255, text_color[tempdurability][2]*255,text_color[tempdurability][3]*255, durabilities[idx]).."|r")
+
+			-- More verbose
+			-- tooltip:AddDoubleLine(GetDetailedItemLevel .. " - " .. unescape(GetInventoryItemLink("player",GetInventorySlotInfo(slots[idx]))), strsub(slots[idx],1,-5) .. " - " .. string_format(format_color, text_color[tempdurability][1]*255, text_color[tempdurability][2]*255,text_color[tempdurability][3]*255, durabilities[idx]).."|r")
 		end
 	end
 	

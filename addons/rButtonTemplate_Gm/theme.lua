@@ -41,6 +41,10 @@ end
 
 local actionButtonConfig = {}
 
+--make it global for rFilter
+rButtonTemplate_rFilter_ActionButtonConfig = actionButtonConfig
+
+
 --backdrop
 actionButtonConfig.backdrop = {
   bgFile = mediapath.."backdrop",
@@ -94,6 +98,33 @@ actionButtonConfig.border = {
 actionButtonConfig.normalTexture = {
   file = mediapath.."normal",
   color = {0.5,0.5,0.5,1},
+  points = {
+    {"TOPLEFT", 0, 0 },
+    {"BOTTOMRIGHT", 0, 0 },
+  },
+}
+
+--pushedTexture
+actionButtonConfig.pushedTexture = {
+  file = mediapath.."pushed",
+  points = {
+    {"TOPLEFT", 0, 0 },
+    {"BOTTOMRIGHT", 0, 0 },
+  },
+}
+
+--highlightTexture
+actionButtonConfig.highlightTexture = {
+  file = mediapath.."highlight",
+  points = {
+    {"TOPLEFT", 0, 0 },
+    {"BOTTOMRIGHT", 0, 0 },
+  },
+}
+
+--checkedTexture
+actionButtonConfig.checkedTexture = {
+  file = mediapath.."checked",
   points = {
     {"TOPLEFT", 0, 0 },
     {"BOTTOMRIGHT", 0, 0 },

@@ -2,7 +2,7 @@
 ## Title: gmExp
 ## Notes: LDB Minimal Exp Viever
 ## Author: Axilea, Nemesis(it)
-## Version: 1.0-2016102601
+## Version: 1.0-2016121501
 
 libs\LibStub.lua
 libs\CallbackHandler-1.0.lua

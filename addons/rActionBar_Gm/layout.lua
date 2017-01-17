@@ -10,6 +10,25 @@
 
 local A, L = ...
 
+-- actionbar spiralcooldown, globalcd etc etc
+-- to enable set it to false
+-- to disable set it to true
+local disablecooldown = true 
+
+if disablecooldown then 
+	for i,v in ipairs{"Action","MultiBarBottomLeft","MultiBarBottomRight","MultiBarRight","MultiBarLeft"} do
+	 
+		for i = 1, 12 do
+			local cooldown = _G[v .. 'Button' .. i .. 'Cooldown']
+			cooldown:SetDrawBling(false)
+			cooldown:SetDrawSwipe(false)
+			cooldown:SetDrawEdge(false)
+			cooldown:SetSwipeColor(0, 0, 0, 0)
+		end
+	end
+end
+
+
 -----------------------------
 -- Fader
 -----------------------------
@@ -67,14 +86,14 @@ local bar1 = {
   framePoint      = { "BOTTOM", UIParent, "BOTTOM", 0, 10 },
   frameScale      = 1,
   framePadding    = 2,
-  buttonWidth     = 42,
-  buttonHeight    = 42,
+  buttonWidth     = 40,
+  buttonHeight    = 40,
   buttonMargin    = 4,
   numCols         = 12,
   startPoint      = "BOTTOMLEFT",
   fader           = nil,
 }
---create
+-- create it
 rActionBar:CreateActionBar1(A, bar1)
 
 -----------------------------
@@ -85,14 +104,14 @@ local bar2 = {
   framePoint      = { "BOTTOM", A.."Bar1", "TOP", 0, 0 },
   frameScale      = 1,
   framePadding    = 2,
-  buttonWidth     = 42,
-  buttonHeight    = 42,
+  buttonWidth     = 40,
+  buttonHeight    = 40,
   buttonMargin    = 4,
   numCols         = 12,
   startPoint      = "BOTTOMLEFT",
   fader           = nil,
 }
---create
+-- create it
 rActionBar:CreateActionBar2(A, bar2)
 
 -----------------------------
@@ -103,14 +122,15 @@ local bar3 = {
   framePoint      = { "BOTTOM", A.."Bar2", "TOP", 0, 0 },
   frameScale      = 1,
   framePadding    = 2,
-  buttonWidth     = 42,
-  buttonHeight    = 42,
+  buttonWidth     = 40,
+  buttonHeight    = 40,
   buttonMargin    = 4,
   numCols         = 12,
   startPoint      = "BOTTOMLEFT",
   fader           = nil,
 }
---create
+
+-- don't want it :)
 -- rActionBar:CreateActionBar3(A, bar3)
 
 -----------------------------
@@ -128,7 +148,7 @@ local bar4 = {
   startPoint      = "TOPRIGHT",
   fader           = fader,
 }
---create
+-- create it
 rActionBar:CreateActionBar4(A, bar4)
 
 -----------------------------
@@ -146,7 +166,7 @@ local bar5 = {
   startPoint      = "TOPRIGHT",
   fader           = fader,
 }
---create
+-- create it
 rActionBar:CreateActionBar5(A, bar5)
 
 -----------------------------
@@ -164,7 +184,7 @@ local stancebar = {
   startPoint      = "BOTTOMLEFT",
   fader           = nil,
 }
---create
+-- create it
 rActionBar:CreateStanceBar(A, stancebar)
 
 -----------------------------
@@ -174,7 +194,7 @@ rActionBar:CreateStanceBar(A, stancebar)
 --petbar
 local petbar = {
   framePoint      = { "BOTTOMLEFT", A.."Bar2", "TOPLEFT", -3, 0 },
-  frameScale      = 0.8,
+  frameScale      = 1,
   framePadding    = 5,
   buttonWidth     = 32,
   buttonHeight    = 32,
@@ -183,7 +203,7 @@ local petbar = {
   startPoint      = "BOTTOMLEFT",
   fader           = nil,
 }
---create
+-- create it
 rActionBar:CreatePetBar(A, petbar)
 
 -----------------------------
@@ -201,7 +221,7 @@ local extrabar = {
   startPoint      = "BOTTOMLEFT",
   fader           = nil,
 }
---create
+-- create it
 rActionBar:CreateExtraBar(A, extrabar)
 
 -----------------------------
@@ -219,7 +239,7 @@ local vehicleexitbar = {
   startPoint      = "BOTTOMLEFT",
   fader           = nil,
 }
---create
+-- create it
 rActionBar:CreateVehicleExitBar(A, vehicleexitbar)
 
 -----------------------------
@@ -237,5 +257,5 @@ local possessexitbar = {
   startPoint      = "BOTTOMLEFT",
   fader           = nil,
 }
---create
+-- create it
 rActionBar:CreatePossessExitBar(A, possessexitbar)

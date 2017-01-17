@@ -15,7 +15,7 @@ do
 	
 	f:SetScript ("OnEvent", function (self, event, ...)
 		if (AddonName == ...) then
-			f.Ticker = C_Timer.NewTicker (.3, AdjustCamera)
+			f.Ticker = C_Timer.NewTicker (1, AdjustCamera)
 			f:UnregisterEvent ("ADDON_LOADED")
 			AddonName = nil
 		end

@@ -1,3 +1,11 @@
+v1.0-2016123101
+- fonts added: Ubuntu Mono
+- fonts added: Droid Sans Mono
+
+v1.0-2016112701
+- fonts added: Happy Giraffe
+- fonts added: Lady Bug
+
 v1.0-2016102601
 - bum toc
 

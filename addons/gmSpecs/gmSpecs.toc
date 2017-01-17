@@ -2,7 +2,7 @@
 ## Title: gmSpecs
 ## Notes: A very simple LDB addon for changing current spec
 ## Author: Axilea, Nemesis(it)
-## Version: 1.0-2016102601
+## Version: 1.0-2017010801
 
 
 libs\LibStub.lua

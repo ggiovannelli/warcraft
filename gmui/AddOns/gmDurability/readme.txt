@@ -1,3 +1,6 @@
+v1.0-2016113001
+- fixed a slot count
+
 v1.0-2016111101
 - added the forgotten NeckSlot :)
 

@@ -1,0 +1,12 @@
+tag 8014df7d6ea65037756cab535640754baf334be9 v1.0.3
+Author:	Ketho <sghs17@outlook.com>
+Date:	Fri Dec 30 13:28:08 2016 +0100
+
+Tagging as v1.0.3
+
+commit 13445156cac2ba6979d4cf825939347b5e549ed1
+Author: Ketho <sghs17@outlook.com>
+Date:   Fri Dec 30 13:27:57 2016 +0100
+
+    changed to Load on Demand
+

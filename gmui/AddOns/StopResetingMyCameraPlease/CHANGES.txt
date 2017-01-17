@@ -1,0 +1,19 @@
+changeset:   2:11c008ddea65
+tag:         tip
+user:        Tercio
+date:        Thu Dec 08 13:23:35 2016 -0200
+summary:     - ticker each 1 second, up from 0.3, should solve some issue with slow computers.
+
+
+changeset:   1:30b33a861546
+user:        Tercio
+date:        Tue Oct 25 16:27:11 2016 -0200
+summary:     - update for 7.1.0
+
+
+changeset:   0:eccf720b78a6
+user:        Tercio
+date:        Thu Aug 11 11:56:39 2016 -0300
+summary:     - hello world (of warcraft).
+
+

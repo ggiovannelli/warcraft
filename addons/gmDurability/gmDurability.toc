@@ -2,7 +2,7 @@
 ## Title: gmDurability
 ## Notes: LDB Mini Durability, auto repair, sell grey and ilv display
 ## Author: Axilea, Nemesis(it)
-## Version: 1.0-2016111101
+## Version: 1.0-2016113001
 ## SavedVariables: GMDURABILITY
 
 libs\LibStub.lua

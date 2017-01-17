@@ -1,0 +1,7 @@
+## Interface: 70100
+## Title: gmSetNote
+## Notes: An addon for batch change Officers Note
+## Author: Axilea, Nemesis(it)
+## Version: 1.0-2017011701
+
+core.lua

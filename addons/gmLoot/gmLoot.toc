@@ -2,7 +2,7 @@
 ## Title: gmLoot
 ## Notes: A very simple LDB addon for AutoLoot settings and loot features
 ## Author: Axilea, Nemesis(it)
-## Version: 1.0-2016102601
+## Version: 1.0-2016121601
 ## SavedVariables: GMLOOT
 
 libs\LibStub.lua

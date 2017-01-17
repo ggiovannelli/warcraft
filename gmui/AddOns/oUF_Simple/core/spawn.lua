@@ -66,7 +66,7 @@ if L.F.CreatePartyStyle then
     "oUF-initialConfigFunction", ([[
       self:SetWidth(%d)
       self:SetHeight(%d)
-      self:SetScale(%f)
+      self:GetParent():SetScale(%f)
     ]]):format(L.C.party.size[1], L.C.party.size[2], L.C.party.scale)
   ):SetPoint(unpack(L.C.party.point))
 end
@@ -113,7 +113,7 @@ if L.F.CreateRaidStyle then
       "oUF-initialConfigFunction", ([[
         self:SetWidth(%d)
         self:SetHeight(%d)
-        self:SetScale(%f)
+        self:GetParent():SetScale(%f)
       ]]):format(L.C.raid.size[1], L.C.raid.size[2], L.C.raid.scale)
     ):SetPoint(unpack(L.C.raid.points[i])) --config needs to provide 8 point tables, one for each raid group
   end

@@ -1,0 +1,8 @@
+## Interface: 70100
+## Author: Axilea
+## Version: 1.0-2016112401
+## Title: rButtonTemplate_Gm_sz
+## Notes: The old Zork's buttons theme merged with Masque Simple Square
+## RequiredDeps: rButtonTemplate
+
+theme.lua

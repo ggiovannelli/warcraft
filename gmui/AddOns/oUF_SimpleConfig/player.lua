@@ -22,35 +22,63 @@ L.C.player = {
     --health and absorb bar cannot be disabled, they match the size of the frame
     colorClass = true,
     colorHealth = true,
-    colorThreat = true,
+    colorThreat = false,
     name = {
       enabled = true,
       points = {
         {"TOPLEFT",2,10},
         {"TOPRIGHT",-2,10},
       },
-      size = 17,
-      tag = "[resting]",
+		size = 17,
+		outline = "","",
+		tag = "[oUF_SimpleConfig:status]",
     },
     health = {
-      enabled = true,
-      point = {"RIGHT",-2,0},
-      size = 16,
-      tag = "[oUF_Simple:health]",
+		enabled = true,
+		point = {"RIGHT",-2,0},
+		size = 16,
+		outline = "","",
+		tag = "[oUF_Simple:health]",
     },
   },
-  --powerbar
-  powerbar = {
-    enabled = true,
-    size = {240,5},
-    point = {"TOP","BOTTOM",0,-4}, --if no relativeTo is given the frame base will be the relativeTo reference
-    colorPower = true,
-    power = {
-      enabled = false,
-      point = {"RIGHT",-2,0},
-      size = 16,
-      tag = "[perpp]",
-    },
+	buffs = {
+		enabled = false,
+		point = {"BOTTOMLEFT","RIGHT",-24,20},
+		num = 5,
+		cols = 5,
+		size = 24,
+		spacing = 5,
+		-- initialAnchor = "TOPLEFT",
+		growthX = "LEFT",
+		growthY = "UP",
+		disableCooldown = true,
+	},
+
+	debuffs = {
+		enabled = false,
+		point = {"TOPLEFT","RIGHT",-24,-28},
+		num = 5,
+		cols = 5,
+		size = 24,
+		spacing = 5,
+		-- initialAnchor = "TOPLEFT",
+		growthX = "LEFT",
+		growthY = "DOWN",
+		disableCooldown = false,
+	},
+	--powerbar
+	powerbar = {
+		enabled = true,
+		size = {240,5},
+		point = {"TOP","BOTTOM",0,-4}, --if no relativeTo is given the frame base will be the relativeTo reference
+		colorPower = true,
+		power = {
+			enabled = false,
+			point = {"RIGHT",-2,0},
+			size = 16,
+			tag = "[perpp]",
+
+		},
   },
   --raidmark
   raidmark = {
@@ -61,17 +89,17 @@ L.C.player = {
   --castbar
   castbar = {
     enabled = true,
-    size = {208,26},
+	size = {208,26},
 	point = {"BOTTOMLEFT","TOPLEFT",32,16},
-		name = {
-		enabled = true,
-		points = {
-			{"LEFT",2,0},
-			{"RIGHT",-2,0},
-		},
+    name = {
+      enabled = true,
+      points = {
+        {"LEFT",2,0},
+        {"RIGHT",-2,0},
+      },
       --font = STANDARD_TEXT_FONT,
       size = 14,
-      outline = "","",
+		outline = "","",
       --align = "CENTER",
       --noshadow = true,
     },

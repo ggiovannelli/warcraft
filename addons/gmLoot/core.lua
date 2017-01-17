@@ -13,21 +13,20 @@ GMLOOT = {
 local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
 local dataobj = ldb:NewDataObject("gmLoot", {
 	type = "data source",
-	icon = "Interface\\Icons\\INV_Misc_QuestionMark.blp",
+	icon = "Interface\\Addons\\"..ADDON.."\\icon.tga",
 	text = "None"
 })
-
 
 local function UpdateLDB()
 
 		local autoloot = GetCVar("autoLootDefault")
 
-		dataobj.icon = "Interface\\Icons\\INV_Misc_Gear_08.blp"
-
 		if autoloot ==  "1" 	then 
-			dataobj.text = "auto" 
+			dataobj.text = "auto"
+			dataobj.icon = "Interface\\Addons\\"..ADDON.."\\icon-all.tga"
 		else
-			dataobj.text = "man" 
+			dataobj.text = "man"
+			dataobj.icon = "Interface\\Addons\\"..ADDON.."\\icon.tga"
 		end
 		
 end
@@ -61,7 +60,7 @@ frame:SetScript("OnEvent", function(self, event, ...)
 end)	
 
 
-dataobj.OnClick = function(self, button)  
+function dataobj.OnClick(self, button)    
 
 
 	if 		button == "RightButton" then  GMLOOT["QUEST"] = not GMLOOT["QUEST"]	

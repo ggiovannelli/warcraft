@@ -74,8 +74,8 @@ L.C.party = {
     showSolo = false,
     showParty = true,
     showRaid = false,
-    point = "BOTTOM",
+    point = "TOP",
     xOffset = 0,
-    yOffset = 14,
+    yOffset = -14,
   },
 }

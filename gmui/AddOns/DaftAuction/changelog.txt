@@ -1,0 +1,21 @@
+TODO: Option to open to sell frame by default
+TODO: Option to press ENTER to post auction
+
+70100.1
+-- Moved config options to Options.lua file
+-- Fixed a display bug on duration dropdown
+-- Fixed a bug where Per Stack prices were being assigned to Per Unit auctions
+-- Fixed a bug where buyout price wasn't being set when auctions without a buyout price were scanned
+
+70000.2
+-- Allow setting default duration (Default 48h)
+-- Added option to set price based on QUALITY alone vs VENDOR price multiplication (Default VENDOR)
+
+70000.1
+-- Code cleanup.
+-- Fixed to work with legion.
+
+60200.2
+-- Fixed addon!
+-- Added feature to set a price if no matches are found based on item quality.
+-- Added options at the top based on item quality.

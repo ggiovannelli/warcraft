@@ -1,8 +1,0 @@
-## Interface: 70100
-## Author: Axilea
-## Version: 1.0-2016110401
-## Title: rButtonTemplate_Gm
-## Notes: A button theme for rButtonTemplate
-## RequiredDeps: rButtonTemplate
-
-theme.lua

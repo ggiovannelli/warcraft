@@ -1,3 +1,7 @@
+v1.0-2016121501
+- minor code tweaks
+- changed ldb icon
+
 v1.0-2016102601
 - bump toc
 

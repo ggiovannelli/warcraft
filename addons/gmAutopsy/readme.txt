@@ -1,3 +1,22 @@
+v1.0-2016123101
+- fix a bug in group chat output
+
+v1.0-2016123001
+- Added the display in the tooltip of the last 40 reports
+- Added the possibility to use LDB only to log.
+
+v1.0-2016121801
+- I uploaded the wrong addon :) 
+
+v1.0-2016121601
+- small code cleanup
+
+v1.0-2016121501
+- change LDB icons
+- rewrite and cleanup most of the code.
+- removed all the options and configurations from panel addons.
+it was not really necessary because everything can be setup with 2 mouse clicks.
+
 v1.0-2016102601
 - bump toc
 

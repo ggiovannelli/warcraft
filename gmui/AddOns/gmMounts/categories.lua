@@ -29,7 +29,6 @@ gmMounts_tbl = {
 	 },
    
    repair = {
-		"Mammut del Viaggiatore della Tundra",
 		"Yak della Grande Spedizione",
    },
    

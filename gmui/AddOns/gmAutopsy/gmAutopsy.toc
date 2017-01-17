@@ -2,8 +2,8 @@
 ## Title: gmAutopsy
 ## Notes: Another minimal fatality-like addon
 ## Author: Axilea, Nemesis(it)
-## Version: v1.0-2016102601
-## SavedVariables: AUTOPSY_ENABLE, AUTOPSY_OUTCHN, AUTOPSY_OUTNAM
+## Version: v1.0-2016123101
+## SavedVariables: GMAUTOPSY
 
 libs\LibStub.lua
 libs\CallbackHandler-1.0.lua

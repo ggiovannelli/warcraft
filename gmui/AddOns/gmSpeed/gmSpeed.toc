@@ -2,7 +2,7 @@
 ## Title: gmSpeed
 ## Notes: LDB Mini speed
 ## Author: Axilea, Nemesis(it)
-## Version: 1.0-2016102601
+## Version: 1.0-2016121401
 
 libs\LibStub.lua
 libs\CallbackHandler-1.0.lua

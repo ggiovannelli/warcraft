@@ -1,3 +1,9 @@
+1.0-2017010801
+- Major rewrite, now you select directly the specs.
+Most of the addon code and fixes are by Vrul (really much appreciated)
+You can check the forum here:
+http://www.wowinterface.com/forums/showthread.php?t=54975
+
 1.0-2016102601
 - bump toc
 

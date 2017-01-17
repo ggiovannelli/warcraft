@@ -1,13 +1,9 @@
-## Interface: 70000
-## X-Curse-Packaged-Version: 7.0.3.4
-## X-Curse-Project-Name: Inventorian
-## X-Curse-Project-ID: inventorian
-## X-Curse-Repository-ID: wow/inventorian/mainline
+## Interface: 70100
 
 ## Title: Inventorian
 ## Notes: One large inventory.
 ## Author: Nevcairiel
-## Version: 7.0.3.4
+## Version: 7.1.0.0
 
 ## OptionalDeps: Ace3, LibWindow-1.1, BagBrother
 

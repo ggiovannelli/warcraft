@@ -14,7 +14,7 @@ local A, L = ...
 
 L.C.raid = {
   enabled = false,
-  size = {130,26},
+  size = {110,26},
   points = { --list of 8 points, one for each raid group
     {"TOPLEFT",20,-20},
     {"TOP", "oUF_SimpleRaidHeader1", "BOTTOM", 0, -10},
@@ -58,8 +58,8 @@ L.C.raid = {
     showSolo = false,
     showParty = false,
     showRaid = true,
-    point = "BOTTOM",
+    point = "TOP",
     xOffset = 0,
-    yOffset = 5,
+    yOffset = -5,
   },
 }

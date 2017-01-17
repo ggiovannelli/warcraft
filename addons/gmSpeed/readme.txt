@@ -1,3 +1,8 @@
+v1.0-2016121401
+- added a new icon. 
+It took me more to make it than write the addon ... Please appreciate :)
+- clean up code 
+
 v1.0-2016102601
 - bump toc
 - removed GetUnitPitch("Player") as Blizzard intends to break certain functionality of raid helper addons

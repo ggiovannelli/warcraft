@@ -11,7 +11,7 @@ local tooltip
 local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
 local dataobj = ldb:NewDataObject("gmProf", {
 	type = "data source",
-	icon = "Interface\\Minimap\\Tracking\\Repair",
+	icon = "Interface\\Addons\\"..ADDON.."\\icon.tga",
 	text = playerName .. " profs"
 })
 
