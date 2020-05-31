@@ -1,12 +1,15 @@
-## Interface: 70100
+## Interface: 80300
+## Version: 830-2020041701
 ## Title: gmExp
 ## Notes: LDB Minimal Exp Viever
-## Author: Axilea, Nemesis(it)
-## Version: 1.0-2016121501
+## Author: gmarco
+## SavedVariables: GMEXP_CFG, GMEXP_NAMES
 
 libs\LibStub.lua
 libs\CallbackHandler-1.0.lua
 libs\LibDataBroker-1.1.lua
+libs\LibQTip-1.0.lua
+libs\LibDBIcon-1.0.lua
 
+localization.lua
 core.lua
-

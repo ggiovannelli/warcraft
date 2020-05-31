@@ -1,12 +1,15 @@
-## Interface: 70100
+## Interface: 80300
+## Version: 830-2020040703
 ## Title: gmMoney
 ## Notes: A very simple LDB money display
-## Author: Axilea, Nemesis(it)
-## Version: 1.0-2016121501
-## SavedVariables: GMMONEY, GMMONEYSET
+## Author: gmarco
+## SavedVariables: GMMONEY_CFG, GMMONEY_NAMES
 
 libs\LibStub.lua
 libs\CallbackHandler-1.0.lua
 libs\LibDataBroker-1.1.lua
+libs\LibQTip-1.0.lua
+libs\LibDBIcon-1.0.lua
 
+localization.lua
 core.lua

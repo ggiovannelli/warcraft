@@ -1,3 +1,44 @@
+830-2020041701
+- changed the savedvar
+- added the scale to the tooltip
+- now items can be clicked
+- added a help tooltip
+
+830-2020040401
+- rewritten using libqtip
+
+830-2020031501
+- bump toc
+
+820-2019062801
+- bump toc
+
+810-2018122201
+- bump toc for 8.1
+
+801-2018072101
+- bump toc for 8.0
+
+720-2017052001
+- Localization: zhTW and zhCN. Thanks to BNS.
+- Revised localization strings to use global strings. Thanks to myrroddin
+
+720-2017051801
+- Added localization.
+Thanks to phanx for her excellent (as usual) tutorial on addons localization.
+https://phanx.net/addons/tutorials/localize
+- Localization: itIT
+- Modify the clicks to change options using a + Shift to prevents misclicks. (suggested by ceylina)
+
+720-2017050701
+- Fix typos
+
+720-2017042301
+- Fix a problem with keystones (null price when depleted but grey quality)
+
+v720-2017032801
+- bump toc
+
 v1.0-2016113001
 - fixed a slot count
 

@@ -1,11 +1,14 @@
-## Interface: 70100
+## Interface: 80300
+## Version: 830-2020040501
 ## Title: gmVideoSwitch
 ## Notes: A LDB plugin to change screen/window settings
-## Author: Axilea, Nemesis(it)
-## Version: 1.0-2016103101
+## Author: gmarco
 
 libs\LibStub.lua
 libs\CallbackHandler-1.0.lua
 libs\LibDataBroker-1.1.lua
+libs\LibQTip-1.0.lua
+libs\LibDBIcon-1.0.lua
 
+localization.lua 
 core.lua

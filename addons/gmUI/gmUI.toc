@@ -1,7 +1,7 @@
-## Interface: 70100
+## Interface: 80300
+## Version: 830-2020031501
 ## Title: gmUI
 ## Notes: gmUI commands
-## Author: Axilea, Nemesis(it)
-## Version: 1.0-2016102601
+## Author: gmarco
 
 core.lua

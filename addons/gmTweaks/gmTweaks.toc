@@ -1,0 +1,8 @@
+## Interface: 80300
+## Version: 830-2020031502
+## Title: gmTweaks
+## Notes: UI & setting tweaks 
+## Author: gmarco
+## SavedVariables: GMTWEAKS, GMTWEAKSCFG
+
+core.lua

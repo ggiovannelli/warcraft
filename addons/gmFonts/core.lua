@@ -16,6 +16,8 @@ local BUTTON_WIDTH = 150
 local lsmfontsmenu
 local gmfontsmenu
 
+
+
 -- saved variables
 GMFONTS = GMFONTS or {}
 
@@ -146,16 +148,8 @@ local function UpdateFonts()
 	
 	for i=1,7 do
 		local f = _G["ChatFrame"..i]
-		local font, size = f:GetFont()
-		f:SetFont(GMFONTS["N"], size)
-	end
-
-	-- I have no idea why the channel list is getting fucked up
-	-- but re-setting the font obj seems to fix it
-	for i=1,MAX_CHANNEL_BUTTONS do
-		local f = _G["ChannelButton"..i.."Text"]
-		f:SetFontObject(GameFontNormalSmallLeft)
-		-- function f:SetFont(...) error("Attempt to set font on ChannelButton"..i) end
+		local font, size, flags = f:GetFont()
+		f:SetFont(GMFONTS["N"], size, flags)
 	end
 
 	for _,butt in pairs(PaperDollTitlesPane.buttons) do butt.text:SetFontObject(GameFontHighlightSmallLeft) end
@@ -187,47 +181,17 @@ end)
 
 
 if LSM then	
-	-- "Ace Futurism is a simple techno font inspired by multiple that already exist. 
-	-- Was initially to be used in a game but the game halted being worked 
-	-- on so I finished up the font and here it is."
-	-- http://nalgames.com/fonts/all-fonts/
+	LSM:Register("font", "My custom font", fontpath .. "myfont.ttf")
 	LSM:Register("font", "Ace Futurism", fontpath .. "Ace_Futurism.ttf")
-	
-	
-	-- 	Expressway is a sans-serif font family inspired by the U.S. Department 
-	--  of Transportation�s FHWA Series of Standard Alphabets. 
-	--  For the second half of the 20th Century, it was the font most used on road signs in U.S.,
-	--  Canada, Mexico, Australia, Spain,Venezuela,the Netherlands, Brazil, Argentina, Taiwan, 
-	--  Malaysia, Indonesia, India, Mongolia and New Zealand.
-	-- Rather than sticking too closely to government specs, Expressway is 
-	-- a more practical design that still holds on to that old, road sign feeling. 
-	-- The full family has 7 weights, 2 widths plus italics for a total of 28 styles.
-	-- This font includes a license that allows free commercial use: sometimes referred to as a desktop license.
 	LSM:Register("font", "ExpressWay", fontpath .. "expressway.ttf")
-
-	
-	-- PT Sans is a drop in replacement of Myriad font by Adobe
-	-- It is licensed under the OFL 1.1.
-	-- https://www.google.com/fonts/specimen/PT+Sans
 	LSM:Register("font", "PT Sans", fontpath .. "PT_Sans-Web-Regular.ttf")
 	LSM:Register("font", "PT Sans Bold", fontpath .. "PT_Sans-Web-Bold.ttf")
 	LSM:Register("font", "PT Sans Bold Italic", fontpath .. "PT_Sans-Web-BoldItalic.ttf")
 	LSM:Register("font", "PT Sans Italic", fontpath .. "PT_Sans-Web-Italic.ttf")
-	
-	-- Carlito is a drop in replacement for Calibri Fonts. 
-	-- Metrically compatible with the current MS default font Calibri. 
-	-- It is licensed under the OFL 1.1.
-	-- http://blogs.gnome.org/uraeus/2013/10/10/a-thank-you-to-google/
 	LSM:Register("font", "Carlito", fontpath .. "Carlito-Regular.ttf")
 	LSM:Register("font", "Carlito Bold", fontpath .. "Carlito-Bold.ttf")
 	LSM:Register("font", "Carlito Italic", fontpath .. "Carlito-Italic.ttf")
 	LSM:Register("font", "Carlito Bold Italic", fontpath .. "Carlito-BoldItalic.ttf")
-	
-	-- The Ubuntu Font Family are a set of matching new libre/open fonts 
-	-- in development during 2010-2011. The development is being funded by Canonical Ltd 
-	-- on behalf the wider Free Software community and the Ubuntu project. 
-	-- The technical font design work and implementation is being undertaken by Dalton Maag.
-	-- http://font.ubuntu.com/
 	LSM:Register("font", "Ubuntu", fontpath .. "Ubuntu-R.ttf")
 	LSM:Register("font", "Ubuntu Italic", fontpath .. "Ubuntu-RI.ttf")
 	LSM:Register("font", "Ubuntu Condensed", fontpath .. "Ubuntu-C.ttf")
@@ -237,92 +201,64 @@ if LSM then
 	LSM:Register("font", "Ubuntu Light Italic", fontpath .. "Ubuntu-LI.ttf")
 	LSM:Register("font", "Ubuntu Medium", fontpath .. "Ubuntu-M.ttf")	
 	LSM:Register("font", "Ubuntu Medium Italic", fontpath .. "Ubuntu-MI.ttf")
-	
 	LSM:Register("font", "Ubuntu Mono", fontpath .. "UbuntuMono-R.ttf")
 	LSM:Register("font", "Ubuntu Mono Italic", fontpath .. "UbuntuMono-RI.ttf")
 	LSM:Register("font", "Ubuntu Mono Bold", fontpath .. "UbuntuMono-B.ttf")
 	LSM:Register("font", "Ubuntu Mono Bold Italic", fontpath .. "UbuntuMono-BI.ttf")
-
-	-- Comic Neue is a casual script typeface released in 2014. It was designed 
-	-- by Craig Rozynski as a more modern, refined version of the ubiquitous, 
-	-- but frequently criticised typeface, Comic Sans.
-	-- http://comicneue.com/
 	LSM:Register("font", "ComicNeue", fontpath .. "ComicNeue-Regular.ttf")	
 	LSM:Register("font", "ComicNeue Light", fontpath .. "ComicNeue-Light.ttf")	
 	LSM:Register("font", "ComicNeue Bold", fontpath .. "ComicNeue-Bold.ttf")	
-
-
-	-- Candara is a humanist sans-serif typeface designed by Gary Munch and commissioned by Microsoft. 
-	-- It is part of the ClearType Font Collection, all starting with the letter C to reflect that 
-	-- they were designed to work well with Microsoft's ClearType text rendering system. 
-	-- The others are Calibri, Cambria, Consolas, Corbel and Constantia.
 	LSM:Register("font", "Candara", fontpath .. "Candara.ttf")
 	LSM:Register("font", "Candara Bold", fontpath .. "Candarab.ttf")
 	LSM:Register("font", "Candara Italic", fontpath .. "Candarai.ttf")
 	LSM:Register("font", "Candara Bold Italic", fontpath .. "Candaraz.ttf")
-	
-	
-	-- Verdana is a humanist sans-serif typeface designed by Matthew Carter for Microsoft Corporation, 
-	-- with hand-hinting done by Thomas Rickner, then at Monotype. The name "Verdana" is based on verdant (something green), 
-	-- and Ana (the name of Howlett's eldest daughter).
-	-- According to a study of online fonts by the Software Usability and Research Laboratory at Wichita State University, 
-	-- participants preferred Verdana to be the best overall font choice and it was also perceived as being among 
-	-- the most legible fonts.
-	-- It is part of Microsoft's TrueType core fonts:
-	-- http://sourceforge.net/projects/corefonts/files/the%20fonts/
 	LSM:Register("font", "Verdana", fontpath .. "Verdana.TTF")
 	LSM:Register("font", "Verdana Bold", fontpath .. "Verdanab.TTF")
 	LSM:Register("font", "Verdana Italic", fontpath .. "Verdanai.TTF")
 	LSM:Register("font", "Verdana Bold Italic", fontpath .. "Verdanaz.TTF")
-
-	-- Lauren is a font developed by Computer Support Corporation. It is a free for personal use.
-	-- Add per request of  mothandras on Curseforge
 	LSM:Register("font", "Lauren", fontpath .. "lauren-normal.ttf")
 	LSM:Register("font", "Lauren Bold", fontpath .. "lauren-bold.ttf")
 	LSM:Register("font", "Lauren Italic", fontpath .. "lauren-italic.ttf")
 	LSM:Register("font", "Lauren Bold Italic", fontpath .. "lauren-bold-italic.ttf")
-	
-	
-	-- Lato is a sans serif typeface family started in the summer of 2010 by Warsaw-based designer Lukasz Dziedzic 
-	-- (Lato means Summer in Polish). In December 2010 the Lato family was published under the Open Font License 
-	-- by his foundry tyPoland, with support from Google. 
-	-- The Lato font family is available as a free download under the SIL Open Font License 1.1. 
-	-- The fonts can be used without any limitations for commercial and non-commercial purposes. 
-	-- They can be also freely modified if the terms of the license are observed.
-	-- http://www.latofonts.com/lato-free-fonts/
 	LSM:Register("font", "Lato", fontpath .. "Lato-Regular.ttf")
 	LSM:Register("font", "Lato Bold", fontpath .. "Lato-Bold.ttf")
 	LSM:Register("font", "Lato Italic", fontpath .. "Lato-Italic.ttf")
 	LSM:Register("font", "Lato Bold Italic", fontpath .. "Lato-BoldItalic.ttf")
 	LSM:Register("font", "Lato Thin", fontpath .. "Lato-Thin.ttf") 
-		
-	-- "The Happy Giraffe" is a font free for personal and charity use by Misti (https://mistifonts.com/)
-	-- http://www.dafont.com/the-happy-giraffe.font
 	LSM:Register("font", "Happy Giraffe", fontpath .. "The Happy Giraffe Demo.ttf")
-
-	-- "Ladybug Love" is a font free for personal and charity use by Misti (https://mistifonts.com/)
-	-- http://www.dafont.com/ladybug-love.font
 	LSM:Register("font", "Lady Bug", fontpath .. "Ladybug Love Demo.ttf")
-	
-	-- Droid is a font family first released in 2007 and created by Ascender Corporation for use by 
-	-- the Open Handset Alliance platform Android[1] and licensed under the Apache License. 
-	-- The fonts are intended for use on the small screens of mobile handsets and were designed 
-	-- by Steve Matteson of Ascender Corporation. 
-	-- The name was derived from the Open Handset Alliance platform named Android
 	LSM:Register("font", "Droid Sans Mono", fontpath .. "DroidSansMono.ttf")
-
-	
+	LSM:Register("font", "Droid Sans", fontpath .. "DroidSans-Regular.ttf")
+	LSM:Register("font", "Droid Sans Bold", fontpath .. "DroidSans-Bold.ttf")	
 	LSM:Register("font", "AD Mono", fontpath .. "a_d_mono.ttf")
-
 	LSM:Register("font", "Terminus", fontpath .. "Terminus.ttf")
 	LSM:Register("font", "Terminus Bold", fontpath .. "TerminusBold.ttf")
-	
-	
+	LSM:Register("font", "Ropa Sans", fontpath .. "RopaSans-Regular.ttf")
+	LSM:Register("font", "Dosis", fontpath .. "Dosis-Regular.ttf")
+	LSM:Register("font", "Dosis SemiBold", fontpath .. "Dosis-SemiBold.ttf")
+	LSM:Register("font", "Dosis Bold", fontpath .. "Dosis-Bold.ttf")
+	LSM:Register("font", "Dosis Medium", fontpath .. "Dosis-Medium.ttf")
+	LSM:Register("font", "Noto Sans", fontpath .. "NotoSans-Regular.ttf")
+	LSM:Register("font", "Noto Sans Bold", fontpath .. "NotoSans-Bold.ttf")
+	LSM:Register("font", "Noto Sans Italic", fontpath .. "NotoSans-Italic.ttf")
+	LSM:Register("font", "Noto Sans Bold Italic", fontpath .. "NotoSans-BoldItalic.ttf")
+	LSM:Register("font", "Noto", fontpath .. "NotoSerif-Regular.ttf")
+	LSM:Register("font", "Noto Bold", fontpath .. "NotoSerif-Bold.ttf")
+	LSM:Register("font", "Noto Italic", fontpath .. "NotoSerif-Italic.ttf")
+	LSM:Register("font", "Noto Bold Italic", fontpath .. "NotoSerif-BoldItalic.ttf")
+	LSM:Register("font", "Noto Mono", fontpath .. "NotoMono-Regular.ttf")
+	LSM:Register("font", "Roboto", fontpath .. "Roboto-Regular.ttf")
+	LSM:Register("font", "Roboto Bold", fontpath .. "Roboto-Bold.ttf")
+	LSM:Register("font", "Roboto Italic", fontpath .. "Roboto-Italic.ttf")
+	LSM:Register("font", "Roboto Bold Italic", fontpath .. "Roboto-BoldItalic.ttf")
 end
 
 -- Configuration Panel -------------------------------------------------------------------------------------
 
 local options = CreateFrame("Frame", ADDON.."Options", InterfaceOptionsFramePanelContainer)
+
+UIParent:UnregisterEvent("GLOBAL_MOUSE_DOWN")
+
 options.name = GetAddOnMetadata(ADDON, "Title") or ADDON
 InterfaceOptions_AddCategory(options)
 
@@ -371,7 +307,7 @@ textgmfonts:SetText("gmFonts sets")
 options.textgmfonts = textgmfonts
  
 local gmlistfonts = {} 
-local gmlistfonts = {"Ubuntu", "Ubuntu Mono", "Ubuntu Light","Carlito", "PT Sans", "ComicNeue", "Candara", "Verdana", "Laurel", "Lato"}
+local gmlistfonts = {"Ubuntu", "Ubuntu Mono", "Ubuntu Light","Carlito", "PT Sans", "ComicNeue", "Candara", "Verdana", "Laurel", "Lato", "Noto", "Noto Sans", "Roboto"}
 
 local dropdown2 = PCD:New(options)
 dropdown2:SetPoint("TOPLEFT", 230, -80)
@@ -379,16 +315,19 @@ dropdown2:SetList(gmlistfonts)
 function dropdown2:OnValueChanged(text)
    
    	local gmfontset = {}
-	gmfontset["Ubuntu"] = {"Ubuntu-R.ttf", "Ubuntu-B.ttf", "Ubuntu-BI.ttf", "Ubuntu-RI.ttf"}
-	gmfontset["Ubuntu Mono"] = {"UbuntuMono-R.ttf", "UbuntuMono-B.ttf", "UbuntuMono-BI.ttf", "UbuntuMono-RI.ttf"}
+	gmfontset["Ubuntu"] = 		{"Ubuntu-R.ttf", "Ubuntu-B.ttf", "Ubuntu-BI.ttf", "Ubuntu-RI.ttf"}
+	gmfontset["Ubuntu Mono"] = 	{"UbuntuMono-R.ttf", "UbuntuMono-B.ttf", "UbuntuMono-BI.ttf", "UbuntuMono-RI.ttf"}
 	gmfontset["Ubuntu Light"] = {"Ubuntu-L.ttf", "Ubuntu-M.ttf", "Ubuntu-MI.ttf", "Ubuntu-L.ttf"}
-	gmfontset["Carlito"] = {"Carlito-Regular.ttf", "Carlito-Bold.ttf", "Carlito-BoldItalic.ttf", "Carlito-Italic.ttf"}
-	gmfontset["PT Sans"] = {"PT_Sans-Web-Regular.ttf", "PT_Sans-Web-Bold.ttf", "PT_Sans-Web-BoldItalic.ttf", "PT_Sans-Web-Italic.ttf"}
-	gmfontset["ComicNeue"] = {"ComicNeue-Regular.ttf", "ComicNeue-Bold.ttf", "ComicNeue-Bold.ttf", "ComicNeue-Regular.ttf"}
-	gmfontset["Candara"] = {"Candara.ttf", "Candarab.ttf", "Candaraz.ttf", "Candarai.ttf"}
-	gmfontset["Verdana"] = {"Verdana.TTF", "Verdanab.TTF", "Verdanaz.TTF", "Verdanai.TTF"}
-	gmfontset["Laurel"]={"lauren-normal.ttf", "lauren-bold.ttf", "lauren-italic.ttf", "lauren-bold-italic.ttf"}
-	gmfontset["Lato"]={"Lato-Regular.ttf", "Lato-Bold.ttf", "Lato-Italic.ttf", "Lato-BoldItalic.ttf"}
+	gmfontset["Carlito"] = 		{"Carlito-Regular.ttf", "Carlito-Bold.ttf", "Carlito-BoldItalic.ttf", "Carlito-Italic.ttf"}
+	gmfontset["PT Sans"] = 		{"PT_Sans-Web-Regular.ttf", "PT_Sans-Web-Bold.ttf", "PT_Sans-Web-BoldItalic.ttf", "PT_Sans-Web-Italic.ttf"}
+	gmfontset["ComicNeue"] = 	{"ComicNeue-Regular.ttf", "ComicNeue-Bold.ttf", "ComicNeue-Bold.ttf", "ComicNeue-Regular.ttf"}
+	gmfontset["Candara"] = 		{"Candara.ttf", "Candarab.ttf", "Candaraz.ttf", "Candarai.ttf"}
+	gmfontset["Verdana"] = 		{"Verdana.TTF", "Verdanab.TTF", "Verdanaz.TTF", "Verdanai.TTF"}
+	gmfontset["Laurel"] = 		{"lauren-normal.ttf", "lauren-bold.ttf", "lauren-italic.ttf", "lauren-bold-italic.ttf"}
+	gmfontset["Lato"] = 		{"Lato-Regular.ttf", "Lato-Bold.ttf", "Lato-Italic.ttf", "Lato-BoldItalic.ttf"}
+	gmfontset["Noto"] = 		{"NotoSerif-Regular.ttf", "NotoSerif-Bold.ttf", "NotoSerif-Italic.ttf", "NotoSerif-BoldItalic.ttf"}
+	gmfontset["Noto Sans"] = 	{"NotoSans-Regular.ttf", "NotoSans-Bold.ttf", "NotoSans-Italic.ttf", "NotoSans-BoldItalic.ttf"}
+	gmfontset["Roboto"] = 		{"Roboto-Regular.ttf", "Roboto-Bold.ttf", "Roboto-Italic.ttf", "Roboto-BoldItalic.ttf"}
 	
 	GMFONTS["N"] 	= fontpath .. gmfontset[text][1]
 	GMFONTS["B"] 	= fontpath .. gmfontset[text][2]

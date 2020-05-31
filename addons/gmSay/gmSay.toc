@@ -1,0 +1,12 @@
+## Interface: 80300
+## Version: 830-2020031501
+## Title: gmSay
+## Notes: A very simple chat pusher :)
+## Author: gmarco
+## SavedVariables: GMSAY_CFG, GMSAY_PH
+
+libs\LibStub.lua
+libs\CallbackHandler-1.0.lua
+libs\LibDataBroker-1.1.lua
+
+core.lua

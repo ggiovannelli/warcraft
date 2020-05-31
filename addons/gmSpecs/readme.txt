@@ -1,3 +1,27 @@
+830-2020032401
+- update libs to latest
+- re-enable right mouse btn on data broker
+- manage the current spec and make it not selectable
+
+830-2020032301
+- complete rewrite using libqtip
+- implement localizations
+
+830-2020031501
+- bump toc
+
+820-2019062801
+- bump toc 
+
+810-2018122201
+- bump toc
+
+801-2018081101
+- bump toc
+
+720-2017032801
+- bump toc
+
 1.0-2017010801
 - Major rewrite, now you select directly the specs.
 Most of the addon code and fixes are by Vrul (really much appreciated)

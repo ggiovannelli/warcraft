@@ -1,0 +1,14 @@
+## Interface: 80300
+## Version: 830-2020041801
+## Title: gmFriends
+## Notes: A little data broker plugin to manage friend lists
+## Author: gmarco
+## SavedVariables: GMFRIENDS_CFG
+
+libs\LibStub.lua
+libs\CallbackHandler-1.0.lua
+libs\LibDataBroker-1.1.lua
+libs\LibQTip-1.0.lua
+
+localization.lua
+core.lua

@@ -1,0 +1,13 @@
+## Interface: 80300
+## Version: 830-2020040701
+## Title: gmEquipSet
+## Notes: Manage equipment sets in LDB
+## Author: gmarco
+
+libs\LibStub.lua
+libs\CallbackHandler-1.0.lua
+libs\LibDataBroker-1.1.lua
+libs\LibQTip-1.0.lua
+
+localization.lua
+core.lua

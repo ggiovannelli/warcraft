@@ -1,10 +1,9 @@
-## Interface: 70100
+## Interface: 80300
+## Version: 830-2020021901
 ## Title: gmFonts
 ## Notes: A small addon for changing default UI fonts and/or adding in SharedMedia
-## Author: Axilea, Nemesis(it)
-## Version: 1.0-2016123101
+## Author: gmarco
 ## SavedVariables: GMFONTS
-
 
 libs\LibStub.lua
 libs\CallbackHandler-1.0.lua

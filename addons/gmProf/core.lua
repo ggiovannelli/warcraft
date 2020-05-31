@@ -1,63 +1,91 @@
--- I want to say thanks to the people in wowinterface forum for the help, code and over all ... patience :-)
--- Phanx, Torhal, Tageshi, SDPhantom, cokedrivers and all the others. 
--- http://www.wowinterface.com/forums/showthread.php?p=299262#post299184
+local ADDON, namespace = ...
+local L = namespace.L
+ 
+local playerName = UnitName("player") 
 
-local ADDON = ...
-local prgname = "|cffffd200gmProf|r"
-local playerName = UnitName("player")
-local string_format = string.format
-local tooltip
+local LeftButton = " |TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:230:307|t "
+local RightButton = " |TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:333:411|t "
+local MiddleButton = " |TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:127:204|t "
 
-local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
-local dataobj = ldb:NewDataObject("gmProf", {
-	type = "data source",
-	icon = "Interface\\Addons\\"..ADDON.."\\icon.tga",
-	text = playerName .. " profs"
-})
-
--- idea and code by SDPhantom ----------
-dataobj.OnClick = function(self, button)  
-
-	if InCombatLockdown() then 
-		return 
+ 
+local function Button_OnClick(row, profindex, button)
+	if button == "LeftButton" then 
+		CastSpell(select(6,GetProfessionInfo(profindex)) + 1,BOOKTYPE_PROFESSION)
+	else
+		ToggleSpellBook(BOOKTYPE_PROFESSION)
 	end
-
-	
---  Get profession IDs
-    local prof1,prof2,_=GetProfessions()
-	
---  Select based on button pressed
-    local name, tex, offset
-	
-    if (button == "LeftButton" and prof1) then
-        name, tex, _, _, _, offset = GetProfessionInfo(prof1)
-		CastSpell(offset+1,BOOKTYPE_PROFESSION)
-    elseif (button == "RightButton" and prof2) then
-        name, tex, _, _, _, offset = GetProfessionInfo(prof2)
-		CastSpell(offset+1,BOOKTYPE_PROFESSION)
-    elseif button == "MiddleButton" then
-        ToggleSpellBook(BOOKTYPE_PROFESSION)
-        return
-    end
 end
+ 
+local LibQTip = LibStub('LibQTip-1.0')
+local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
+ 
+local dataobj = ldb:NewDataObject(ADDON, {
+    type = "data source",
+	icon = "Interface\\Minimap\\Tracking\\Repair",
+	text = _G["TRADE_SKILLS"]
+})
+  
+local function OnRelease(self)
+	LibQTip:Release(self.tooltip)
+	self.tooltip = nil
+end  
+ 
+local function anchor_OnEnter(self)
 
-function dataobj.OnTooltipShow(tooltip)
-	local i
-
-	tooltip:AddLine(ADDON)
-	tooltip:AddLine(" ")
+	if self.tooltip then
+		LibQTip:Release(self.tooltip)
+		self.tooltip = nil  
+	end
 	
-	-- code by: cokedrivers 
-	-- http://www.wowinterface.com/downloads/info19814-nData.html
+    local row,col
+    local tooltip = LibQTip:Acquire(ADDON.."tip", 2, "LEFT", "LEFT")
+    self.tooltip = tooltip 
+    tooltip:SmartAnchorTo(self)
+	tooltip:EnableMouse(true)
+	tooltip.OnRelease = OnRelease
+	tooltip.OnLeave = OnLeave
+    tooltip:SetAutoHideDelay(.1, self)
+
+	row,col = tooltip:AddLine("")
+	tooltip:SetCell(row,1,"|cffffd200" .. _G["SKILLS"] .. "|r","CENTER",2)
+	row,col = tooltip:AddLine("")
+	row,col = tooltip:AddLine("")
+	
+	local IHaveAProf = false
 	for i = 1, select("#", GetProfessions()) do
-		local v = select(i, GetProfessions())
-		if v ~= nil then
-			local name, icon, rank, maxrank = GetProfessionInfo(v)
-			tooltip:AddDoubleLine(string_format("|T%s:0|t %s",icon, name), string_format("%d / %d",rank, maxrank) ,1,1,1, 1,1,1)	
+		local profindex = select(i, GetProfessions())
+		if profindex ~= nil then
+			IHaveAProf = true
+			local name, icon, rank, maxrank = GetProfessionInfo(profindex)
+			row,col = tooltip:AddLine()
+			tooltip:SetCell(row,1,string.format("|T%s:0|t %s",icon,name),"LEFT")
+			tooltip:SetCell(row,2,string.format("%d : %d",rank,maxrank),"RIGHT")
+			tooltip:SetLineScript(row, 'OnMouseDown', Button_OnClick, profindex)  
+			if rank == maxrank then 
+				tooltip:SetLineTextColor(row,0,1,0,1)
+			end
 		end
 	end
-	tooltip:AddLine(" ")
-	tooltip:AddDoubleLine("Left Click", 	"Profession #1")
-	tooltip:AddDoubleLine("Right Click", 	"Profession #2")
-	tooltip:AddDoubleLine("Middle Click", 	"Spellbook")
+	
+	if IHaveAProf then
+		row,col = tooltip:AddLine("")
+		row,col = tooltip:AddLine("")
+		
+		row,col = tooltip:AddLine()
+		tooltip:SetCell(row,1,LeftButton .. "|cffffd200" .. _G["SKILL"] .. "|r","LEFT")
+		tooltip:SetCell(row,2,RightButton .. "|cffffd200" .. _G["SPELLBOOK"] .. "|r","RIGHT")
+	else 
+		row,col = tooltip:AddLine()
+		tooltip:SetCell(row,1,_G["NO"] .." ".._G["TRADE_SKILLS"],"CENTER",2)
+	end
+	row,col = tooltip:Show()
+	
+end
+ 
+dataobj.OnEnter = function(self)
+    anchor_OnEnter(self)
+end
+ 
+dataobj.OnLeave = function(self)
+    -- Null operation: Some LDB displays get cranky if this method is missing.
 end

@@ -1,0 +1,14 @@
+## Interface: 80300
+## Version: 830-2020031701
+## Title: gmKeyStone
+## Notes: LDB keystone tracker 
+## Author: gmarco
+## SavedVariables: GMKEYSTONE_NAMES
+
+libs\LibStub.lua
+libs\CallbackHandler-1.0.lua
+libs\LibDataBroker-1.1.lua
+libs\LibQTip-1.0.lua
+libs\LibDBIcon-1.0.lua
+
+core.lua

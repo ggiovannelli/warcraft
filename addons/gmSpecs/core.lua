@@ -1,111 +1,30 @@
 -- Most of the addon code and fixes are by Vrul (really much appreciated)
 -- You can check the forum here:
 -- http://www.wowinterface.com/forums/showthread.php?t=54975
--- 
 
-local ADDON = ...
+local ADDON, namespace = ...
+local L = namespace.L
+local tooltip
+local arg = {}
 
-local fontName, fontHeight, fontFlags = GameFontNormal:GetFont()
+local talents
+local LeftButton = " |TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:230:307|t "
+local RightButton = " |TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:333:411|t "
+local MiddleButton = " |TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:127:204|t "
 
-local BUTTON_HEIGHT = fontHeight + 4
-local BUTTON_SPACING = 0
-local MENU_BUFFER = 10
-local MENU_SPACING = 1
-local MENU_WIDTH = 190
 
-local Menu = CreateFrame('Frame', nil, UIParent)
-Menu:SetFrameStrata('TOOLTIP')
-Menu:SetClampedToScreen(true)
-Menu:SetBackdrop({
-	bgFile = "Interface/DialogFrame/UI-DialogBox-Background",
-	edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
-	tile = true, tileSize = 32, edgeSize = 16,
-	insets = { left = 3, right = 3, top = 3, bottom = 3 }
-})
-Menu:Hide()
-
-local function Menu_OnLeave()
-	local focus = GetMouseFocus() or WorldFrame
-	if focus ~= Menu and focus:GetParent() ~= Menu then
-		Menu:Hide()
-	end
-end
-Menu:SetScript('OnLeave', Menu_OnLeave)
-
-local talent_desc = Menu:CreateFontString()
-talent_desc:SetPoint("TOPLEFT", Menu, "TOPLEFT", MENU_BUFFER, -MENU_BUFFER)
-talent_desc:SetFont(fontName, fontHeight)
-talent_desc:SetTextColor(1, 1, 1, 1)
-talent_desc:SetText("Spec config:")
-
-local talent_value = Menu:CreateFontString()
-talent_value:SetPoint("TOPRIGHT", Menu, "TOPRIGHT", -MENU_BUFFER, -MENU_BUFFER)
-talent_value:SetFont(fontName, fontHeight)
-talent_value:SetTextColor(1, 1, 1, 1)
-
-local rclick_desc = Menu:CreateFontString()
-rclick_desc:SetPoint("BOTTOMLEFT", Menu, "BOTTOMLEFT", MENU_BUFFER, MENU_BUFFER)
-rclick_desc:SetFont(fontName, fontHeight)
-rclick_desc:SetTextColor(0, 1, 0, 1)
-rclick_desc:SetText("Right-Click")
-
-local rclick_value = Menu:CreateFontString()
-rclick_value:SetPoint("BOTTOMRIGHT", Menu, "BOTTOMRIGHT", -MENU_BUFFER, MENU_BUFFER)
-rclick_value:SetFont(fontName, fontHeight)
-rclick_value:SetTextColor(1, 0.8, 0, 1)
-rclick_value:SetText("Toggle Talents")
-
-local lclick_desc = Menu:CreateFontString()
-lclick_desc:SetPoint("BOTTOMLEFT", rclick_desc, "TOPLEFT", 0, MENU_SPACING)
-lclick_desc:SetFont(fontName, fontHeight)
-lclick_desc:SetTextColor(0, 1, 0, 1)
-lclick_desc:SetText("Left-Click")
-
-local lclick_value = Menu:CreateFontString()
-lclick_value:SetPoint("BOTTOMRIGHT", rclick_value, "TOPRIGHT", 0, MENU_SPACING)
-lclick_value:SetFont(fontName, fontHeight)
-lclick_value:SetTextColor(1, 0.8, 0, 1)
-lclick_value:SetText("Toggle Menu")
-
-local dataobj = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject(ADDON, {
-	type = "data source",
-	icon = "Interface\\Icons\\INV_Misc_QuestionMark.blp",
-	text = "None",
-	OnClick = function(self, button)
-		if button == "LeftButton" then
-			Menu:SetShown(not Menu:IsShown())
-		elseif button == "RightButton" then
-			ToggleTalentFrame()
-		end
-	end,
-	OnEnter = function(self)
-		if not Menu:IsShown() then
-			local _, selfCenter = self:GetCenter()
-			local _, uiCenter = UIParent:GetCenter()
-			Menu:ClearAllPoints()
-			if selfCenter >= uiCenter then
-				Menu:SetPoint('TOP', self, 'BOTTOM')
-			else
-				Menu:SetPoint('BOTTOM', self, 'TOP')
-			end
-			Menu:Show()
-		end
-	end,
-	OnLeave = Menu_OnLeave
+local LibQTip = LibStub('LibQTip-1.0')
+local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
+ 
+local dataobj = ldb:NewDataObject(ADDON, {
+    type = "data source",
+    icon = "Interface\\Icons\\INV_Misc_QuestionMark.blp",
+    text = "-"
 })
 
-local function EventHandler()
-	local activeSpec = GetSpecialization()
-	if activeSpec then
-		local id, name, description, icon = GetSpecializationInfo(activeSpec)
-		dataobj.text = name
-		dataobj.icon = icon     
-	else
-		dataobj.icon = "Interface\\Icons\\INV_Misc_QuestionMark.blp"
-		dataobj.text = "None"
-	end
+local function StringTalent()
 
-	local talents = ""
+	talents = ""
 	for tier = 1, GetMaxTalentTier()  do
 		local talentTier = "x"
 		for column = 1, 3 do
@@ -121,52 +40,109 @@ local function EventHandler()
 			talents = talentTier
 		end
 	end
-	talent_value:SetText(talents)
+	return talents
 end
 
-local function Button_OnClick(self)
-	Menu:Hide()
-	if not InCombatLockdown() and GetSpecialization() ~= self.index then
-		SetSpecialization(self.index)
+
+local function Button_OnClick(row,arg,button)
+
+	if InCombatLockdown() then return end
+	
+	if button == "LeftButton" and GetSpecialization() ~= arg then
+		SetSpecialization(arg.index)
+	elseif button == "RightButton" then
+		ToggleTalentFrame()
+	end
+	
+	LibQTip:Release(arg.tooltip)
+	arg.tooltip = nil
+	
+end
+ 
+local function OnRelease(self)
+	LibQTip:Release(self.tooltip)
+	self.tooltip = nil
+end  
+
+local function anchor_OnEnter(self)
+
+	arg = {}
+	
+	if self.tooltip then
+		LibQTip:Release(self.tooltip)
+		self.tooltip = nil  
+	end
+	
+    local row,col
+    local tooltip = LibQTip:Acquire(ADDON.."tip", 2, "LEFT", "LEFT")
+    self.tooltip = tooltip 
+    tooltip:SmartAnchorTo(self)
+	tooltip:EnableMouse(true)
+	tooltip.OnRelease = OnRelease
+	tooltip.OnLeave = OnLeave
+    tooltip:SetAutoHideDelay(.1, self)
+	    
+    row,col = tooltip:AddLine("|cffffd200" .. L["Talent tree"] .."|r",StringTalent())
+	row,col = tooltip:AddLine("")
+	row,col = tooltip:AddLine("")
+	
+	local currentSpec = GetSpecialization()
+		
+	for i = 1, GetNumSpecializations() do
+		local id, name, description, icon, background, role = GetSpecializationInfo(i)
+
+		row,col = tooltip:AddLine(string.format("|T%s:0|t %s",icon,name))
+		
+		if currentSpec == i then 
+			tooltip:SetLineTextColor(row,0,1,0,1)
+		else
+			arg[row] = { tooltip=tooltip, index=i }
+			tooltip:SetLineScript(row, 'OnMouseDown', Button_OnClick, arg[row])
+		end
+	end
+	
+	row,col = tooltip:AddLine("")
+	row,col = tooltip:AddLine("")
+
+	row,col = tooltip:AddLine()
+	tooltip:SetCell(row,1,LeftButton .. "|cffffd200" .. L["Specialization"] .. "|r","LEFT",1,0,15)
+	tooltip:SetCell(row,2,RightButton .. "|cffffd200" .. L["Talents"] .. "|r","RIGHT")
+
+    row,col = tooltip:Show()
+end
+ 
+dataobj.OnEnter = function(self)
+    anchor_OnEnter(self)
+end
+ 
+dataobj.OnLeave = function(self)
+    -- Null operation: Some LDB displays get cranky if this method is missing.
+end
+
+dataobj.OnClick = function(self, button)
+
+	if InCombatLockdown() then return end
+
+	if button == "RightButton" then
+		ToggleTalentFrame()
 	end
 end
 
-Menu:RegisterEvent('PLAYER_LOGIN')
-Menu:SetScript('OnEvent', function(self, event)
-	Menu:UnregisterEvent(event)
-	Menu:SetScript('OnEvent', EventHandler)
+local frame = CreateFrame("Frame")
+frame:RegisterEvent("PLAYER_LOGIN")
+frame:RegisterEvent('PLAYER_ENTERING_WORLD')
+frame:RegisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
+frame:RegisterEvent('PLAYER_SPECIALIZATION_CHANGED')
+frame:SetScript("OnEvent", function(self, event, ...)
+	
+	local activeSpec = GetSpecialization()
+	if activeSpec then
+		local id, name, description, icon = GetSpecializationInfo(activeSpec)
+		dataobj.text = name
+		dataobj.icon = icon     
+	else
+		dataobj.icon = "Interface\\Icons\\INV_Misc_QuestionMark.blp"
+		dataobj.text = "None"
+	end
 
-	local numButtons = GetNumSpecializations()
-	for index = 1, numButtons do
-		local id, name, description, icon, background, role = GetSpecializationInfo(index)
-
-		local button = CreateFrame("Button", nil, Menu)
-		if index ~= 1 then
-			button:SetPoint("TOPLEFT", Menu[index - 1], "BOTTOMLEFT", 0, -BUTTON_SPACING)
-		else
-			button:SetPoint("TOPLEFT", talent_desc, "BOTTOMLEFT", 0, -MENU_BUFFER)
-		end
-		button:SetPoint("RIGHT", -MENU_BUFFER, 0)
-		button:SetHeight(BUTTON_HEIGHT)
-		button:SetNormalFontObject("GameFontNormal")
-		button:SetHighlightTexture("Interface\\QuestFrame\\UI-QuestTitleHighlight")
-		button.index = index
-		button:SetScript("OnClick", Button_OnClick)
-		button:SetScript("OnLeave", Menu_OnLeave)
-		Menu[index] = button
-
-		local text = button:CreateFontString(ADDON .. "btn_font", nil, "GameFontNormal")
-		text:SetAllPoints()
-		text:SetJustifyH("LEFT")
-		text:SetJustifyV("MIDDLE")
-		text:SetTextColor(1, 1, 1, 1)
-		button:SetFontString(text)
-		button:SetText(("|T%s:0|t %s"):format(icon, name))
-	end 
-	Menu:SetSize(MENU_WIDTH, (MENU_BUFFER * 4) + (fontHeight * 3) + MENU_SPACING + ((BUTTON_HEIGHT + BUTTON_SPACING) * numButtons - BUTTON_SPACING))
-
-	EventHandler()
-	Menu:RegisterEvent('PLAYER_ENTERING_WORLD')
-	Menu:RegisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
-	Menu:RegisterEvent('PLAYER_SPECIALIZATION_CHANGED')
 end)

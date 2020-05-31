@@ -1,8 +1,8 @@
-## Interface: 70100
+## Interface: 80300
+## Version: 830-2020031601
 ## Title: gmPets
 ## Notes: Randomly select a companion from your collection or from custom categories.
-## Author: Axilea, Nemesis(it)
-## Version: 1.0-2016102601
+## Author: gmarco
 
 libs\LibPetJournal-2.0\LibStub.lua
 libs\LibPetJournal-2.0\CallbackHandler-1.0.lua

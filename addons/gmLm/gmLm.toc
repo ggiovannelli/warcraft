@@ -1,0 +1,15 @@
+## Interface: 80300
+## Version: 830-2020040601
+## Title: gmLm
+## Notes: A very simple LDB loot monitor
+## Author: gmarco
+## SavedVariables: GMLM_CFG
+
+libs\LibStub.lua
+libs\CallbackHandler-1.0.lua
+libs\LibDataBroker-1.1.lua
+libs\LibQTip-1.0.lua
+libs\LibDBIcon-1.0.lua
+
+localization.lua
+core.lua

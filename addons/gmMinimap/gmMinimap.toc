@@ -1,0 +1,7 @@
+## Interface: 80300
+## Version: 830-2020031501
+## Title: gmMinimap
+## Notes: Minimal Minimap restyle
+## Author: gmarco
+
+core.lua

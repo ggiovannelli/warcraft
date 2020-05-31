@@ -1,3 +1,25 @@
+830-2020032601
+- rewrite using libqtip
+
+830-2020031501
+- bump toc
+
+820-2019062801
+- bump toc
+
+815-2019050301
+- add the coords display 
+- Load WorldMap e ZoneMap with mouse clicks 
+ 
+801-2018081102
+- fixed interface version
+
+801-2018081101
+- bump toc
+
+720-2017032801
+- bump toc
+
 v1.0-2016121401
 - added a new icon. 
 It took me more to make it than write the addon ... Please appreciate :)

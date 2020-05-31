@@ -9,7 +9,15 @@
 
 -- So gmDurability is born. It shows only the min durability of your items (even if adding all durability in tooltip could be easily done).
 
-local ADDON = ...
+
+local ADDON, namespace = ...
+local L = namespace.L
+
+local prgname = "|cffffd200"..ADDON.."|r"
+
+local LeftButton = " |TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:230:307|t "
+local RightButton = " |TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:333:411|t "
+local MiddleButton = " |TInterface\\TUTORIALFRAME\\UI-TUTORIAL-FRAME:13:11:0:-1:512:512:12:66:127:204|t "
 
 local math_min = math.min
 local string_format = string.format
@@ -28,16 +36,18 @@ local function unescape(String)
   return Result
 end
 
-
-GMDURABILITY = {
-     AUTOREPAIR = true,
-     GUILDREPAIR = true,
-     AUTOSELL = true,
-}
-
+local arg = {}
+ 
+local LibQTip = LibStub('LibQTip-1.0')
+local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
+ 
+local dataobj = ldb:NewDataObject(ADDON, {
+    type = "data source",
+    icon = "Interface\\Minimap\\Tracking\\Repair",
+    text = "-"
+}) 
 
 -- working vars
-local prgname = "|cffffd200gmDurability|r"
 local idx, perc
 local format_color = "|cff%02x%02x%02x%s"
 local durabilities = {}
@@ -80,20 +90,366 @@ local function colorperc(arg)
 	end
 
 end
+
+local function YesNo(arg)
+
+	if GMDURABILITY_CFG[arg.param] == true then 
+		arg.tooltip:SetCell(arg.row,3,L["YES"])
+		arg.tooltip:SetCellTextColor(arg.row,3,0,1,0,1)
+	else
+		arg.tooltip:SetCell(arg.row,3,L["NO"])
+		arg.tooltip:SetCellTextColor(arg.row,3,1,0,0,1)
+	end
+
+end 
+
+local function OnRelease_legenda(self)
+	LibQTip:Release(self.tooltip_legenda)
+	self.tooltip_legenda = nil  
+end  
+ 
+local function OnLeave_legenda(self)
+	if self.tooltip_legenda and not self.tooltip_legenda:IsMouseOver() then
+		self.tooltip_legenda:Release()
+	end
+end  
+
+local function ShowLegenda(self)
 	
+	arg = {}
+
+	LibQTip:Release(self.tooltip_legenda)
+	self.tooltip_legenda = nil
+	
+	local row,col
+    local tooltip_legenda = LibQTip:Acquire(ADDON.."tip_legenda", 2, "LEFT","RIGHT")
+    self.tooltip_legenda = tooltip_legenda 
+	tooltip_legenda:SmartAnchorTo(self)
+	tooltip_legenda:EnableMouse(true)
+	tooltip_legenda.OnRelease = OnRelease_legenda
+	tooltip_legenda.OnLeave = OnLeave_legenda
+    tooltip_legenda:SetAutoHideDelay(.1, self)
+	tooltip_legenda:SetScale(GMDURABILITY_CFG["SCALE"])
+	
+ 	row,col = tooltip_legenda:AddLine("")
+	
+	row,col = tooltip_legenda:AddLine()
+	tooltip_legenda:SetCell(row,1,_G["GAMEMENU_HELP"],"CENTER",2)
+	
+	row,col = tooltip_legenda:AddLine("")	
+	row,col = tooltip_legenda:AddLine("")		
+	row,col = tooltip_legenda:AddLine("")
+
+	row,col = tooltip_legenda:AddLine()
+	tooltip_legenda:SetCell(row,1,_G["ITEM_UPGRADE_STAT_AVERAGE_ITEM_LEVEL"] .. ": " .. string.format(format_color,255,0,0,L["below"]).."|r or " .. string.format(format_color,0,255,0,L["above"]).."|r " ..L["average equipped"],2)
+
+	row,col = tooltip_legenda:AddLine()
+	tooltip_legenda:SetCell(row,1,L["Durability"] .. ": " .. string_format(format_color,255,0,0,"0-24")..	"|r ".. string_format(format_color,255,128,0,"25-49")..	"|r " ..string_format(format_color,255,255,0,"50-74")..	"|r " .. string_format(format_color,0,255,0,"75-100")..	"|r",2)
+
+	row,col = tooltip_legenda:AddLine("")		
+	row,col = tooltip_legenda:AddLine("")
+	row,col = tooltip_legenda:AddLine("")		
+	row,col = tooltip_legenda:AddLine("")
+	
+	row,col = tooltip_legenda:AddLine()
+	tooltip_legenda:SetCell(row,1,_G["ITEMS"],"CENTER",2)
+	row,col = tooltip_legenda:AddSeparator()
+	row,col = tooltip_legenda:AddLine()
+	
+	row,col = tooltip_legenda:AddLine()
+	tooltip_legenda:SetCell(row,1,LeftButton)
+	tooltip_legenda:SetCell(row,2,"|cffffd200" .. _G["SHOW"] .. "|r")
+	
+	row,col = tooltip_legenda:AddLine()
+	tooltip_legenda:SetCell(row,1,RightButton)
+	tooltip_legenda:SetCell(row,2,"|cffffd200" .. _G["HIDE"] .. "|r")
+
+	row,col = tooltip_legenda:AddLine("")	
+	row,col = tooltip_legenda:AddLine("")
+	
+	row,col = tooltip_legenda:AddLine()
+	tooltip_legenda:SetCell(row,1,L["DataBroker"],"CENTER",2)
+	row,col = tooltip_legenda:AddSeparator()
+	row,col = tooltip_legenda:AddLine()
+	
+	row,col = tooltip_legenda:AddLine()
+	tooltip_legenda:SetCell(row,1,LeftButton)
+	tooltip_legenda:SetCell(row,2,"|cffffd200" .. _G["CHARACTER"] .. "|r")
+
+	row,col = tooltip_legenda:AddLine()
+	tooltip_legenda:SetCell(row,1,RightButton)
+	tooltip_legenda:SetCell(row,2,"|cffffd200" .. _G["CHARACTER"] .. "|r")
+
+	row,col = tooltip_legenda:AddLine("")		
+	row,col = tooltip_legenda:AddLine("")		
+
+	row,col = tooltip_legenda:AddLine()
+	tooltip_legenda:SetCell(row,1,_G["SHIFT_KEY"] .. " " .. LeftButton)
+	tooltip_legenda:SetCell(row,2,"|cffffd200 - " .. _G["UI_SCALE"] .. "|r")
+
+	row,col = tooltip_legenda:AddLine()
+	tooltip_legenda:SetCell(row,1,_G["SHIFT_KEY"] .. " " ..RightButton)
+	tooltip_legenda:SetCell(row,2,"|cffffd200 + " .. _G["UI_SCALE"] .. "|r")
+
+	row,col = tooltip_legenda:AddLine()
+	tooltip_legenda:SetCell(row,1,_G["SHIFT_KEY"] .. " " ..MiddleButton)
+	tooltip_legenda:SetCell(row,2,"|cffffd200 1.0 " .. _G["UI_SCALE"] .. "|r")
+
+	row,col = tooltip_legenda:AddLine("")		
+	row,col = tooltip_legenda:AddLine("")	
+
+	row,col = tooltip_legenda:AddLine()
+	tooltip_legenda:SetCell(row,1,_G["ALT_KEY"] .. " " ..LeftButton)
+	tooltip_legenda:SetCell(row,2,"|cffffd200" .. _G["GAMEMENU_HELP"] .. "|r")
+
+	row,col = tooltip_legenda:AddLine("")		
+	row,col = tooltip_legenda:AddLine("")		
+	
+	row,col = tooltip_legenda:AddLine()
+	tooltip_legenda:SetCell(row,1,_G["GAME_VERSION_LABEL"],"CENTER",2)
+	row,col = tooltip_legenda:AddSeparator()
+	row,col = tooltip_legenda:AddLine()	
+	
+	row,col = tooltip_legenda:AddLine()
+	tooltip_legenda:SetCell(row,1,prgname)
+	tooltip_legenda:SetCell(row,2,"ver.|cffffd200"..GetAddOnMetadata(ADDON, "Version").."|r")
+	row,col = tooltip_legenda:AddLine("")	
+
+	tooltip_legenda:Show()
+end
 
 
-local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
-local dataobj = ldb:NewDataObject("GmDurability", {
-	type = "data source",
-	icon = "Interface\\Minimap\\Tracking\\Repair",
-	text = "100%",
-})
+
+local function Button_OnClick(row,arg,button)
+	
+	if InCombatLockdown() then return end
+ 
+	if button == "RightButton" then 
+		HideUIPanel(ItemRefTooltip)
+		LibQTip:Release(arg.tooltip)
+		arg.tooltip = nil
+	end 
+ 
+	if button == "LeftButton" and arg.param == "item" then
+	
+		ShowUIPanel(ItemRefTooltip)
+		
+		if not ItemRefTooltip:IsShown() then
+			
+			ItemRefTooltip:SetOwner(UIParent, "ANCHOR_PRESERVE")
+
+		end
+		
+		ItemRefTooltip:SetHyperlink(arg.itemLink)
+	
+	elseif button == "LeftButton" then 
+
+		GMDURABILITY_CFG[arg.param] = not GMDURABILITY_CFG[arg.param]
+		LibQTip:Release(arg.tooltip)
+		arg.tooltip = nil
+
+	end
+end
+ 
+local function OnRelease(self)
+	LibQTip:Release(self.tooltip)
+	self.tooltip = nil
+end  
+ 
+local function OnLeave(self)
+	print("Leaving/Hiding broker frame")
+	if self.tooltip and not self.tooltip:IsMouseOver() then
+		self.tooltip:Release()
+	end
+end  
+ 
+local function anchor_OnEnter(self)
+
+	arg = {}
+
+	LibQTip:Release(self.tooltip_legenda)
+	self.tooltip_legenda = nil  
+
+	LibQTip:Release(self.tooltip)
+	self.tooltip = nil
+	
+    local row,col
+    local tooltip = LibQTip:Acquire(ADDON.."tip", 3,"LEFT","LEFT","RIGHT")
+    self.tooltip = tooltip 
+    tooltip:SmartAnchorTo(self)
+	tooltip:EnableMouse(true)
+	tooltip.OnRelease = OnRelease
+	tooltip.OnLeave = OnLeave
+    tooltip:SetAutoHideDelay(.1, self)
+	tooltip:SetScale(GMDURABILITY_CFG["SCALE"])
+
+	row,col = tooltip:AddLine("")
+
+	row,col = tooltip:AddLine("")
+	tooltip:SetCell(row,1,string_format(_G["ITEM_UPGRADE_STAT_AVERAGE_ITEM_LEVEL"] .. ": " .. L["Total %.1f - Equipped %.1f"], GetAverageItemLevel()),"CENTER",3)
+	row,col = tooltip:AddLine("")
+	row,col = tooltip:AddLine("")
+
+	if HasArtifactEquipped() then
+		if  GetInventoryItemID("player", 17) then  -- artefatto doppio
+
+			milv = GetDetailedItemLevelInfo(GetInventoryItemLink("player", GetInventorySlotInfo("MainHandSlot")))
+			oilv = GetDetailedItemLevelInfo(GetInventoryItemLink("player", GetInventorySlotInfo("SecondaryHandSlot")))
+			
+			if milv <= oilv then 
+				ailv = oilv 
+			else
+				ailv = milv
+			end
+		else
+			ailv = GetDetailedItemLevelInfo(GetInventoryItemLink("player", GetInventorySlotInfo("MainHandSlot")))
+		end
+	end
+
+
+	for idx=1, #slots do
+		
+		if GetInventoryItemLink("player", GetInventorySlotInfo(slots[idx])) then 			
+			
+			local tempdurability = colorperc(tonumber(durabilities[idx]/100))
+						
+			if idx > 14 and HasArtifactEquipped() then 				
+				GetDetailedItemLevel = ailv
+			else			
+				GetDetailedItemLevel = GetDetailedItemLevelInfo(GetInventoryItemLink("player", GetInventorySlotInfo(slots[idx])))
+			end
+			
+			if GetDetailedItemLevel <= select(2,GetAverageItemLevel()) then 
+				GetDetailedItemLevel = 	string_format(format_color,255,0,0, GetDetailedItemLevel ) .. "|r"
+			else
+				GetDetailedItemLevel = 	string_format(format_color,0,255,0, GetDetailedItemLevel ) .. "|r"
+			end
+
+			row,col = tooltip:AddLine()
+			tooltip:SetCell(row,1,GetDetailedItemLevel)
+			tooltip:SetCell(row,2,unescape(GetInventoryItemLink("player",GetInventorySlotInfo(slots[idx]))))	
+			tooltip:SetCell(row,3,string_format(format_color, text_color[tempdurability][1]*255, text_color[tempdurability][2]*255,text_color[tempdurability][3]*255, durabilities[idx]) .."|r")
+			arg[row] = { tooltip=tooltip, row=row, param="item", itemLink=GetInventoryItemLink("player",GetInventorySlotInfo(slots[idx]))}
+			tooltip:SetLineScript(row, 'OnMouseDown', Button_OnClick, arg[row])	
+			
+		end
+	end
+
+	row,col = tooltip:AddLine("")
+	row,col = tooltip:AddLine("")
+	row,col = tooltip:AddLine("")
+	row,col = tooltip:AddLine("")
+	
+	row,col = tooltip:AddLine()
+	tooltip:SetCell(row,1,L["Auto repair"],2)
+	arg[row] = { tooltip=tooltip, row=row, param="AUTOREPAIR" }
+	tooltip:SetLineScript(row, 'OnMouseDown', Button_OnClick, arg[row])	
+	YesNo(arg[row])
+	
+	row,col = tooltip:AddLine()
+	tooltip:SetCell(row,1,L["Use guild funds"],2)
+	arg[row] = { tooltip=tooltip, row=row, param="GUILDREPAIR"  }
+	tooltip:SetLineScript(row, 'OnMouseDown', Button_OnClick, arg[row])	
+	YesNo(arg[row])
+
+	row,col = tooltip:AddLine()
+	tooltip:SetCell(row,1,L["Auto sell junk"],2)
+	arg[row] = { tooltip=tooltip, row=row, param="AUTOSELL"}
+	tooltip:SetLineScript(row, 'OnMouseDown', Button_OnClick, arg[row])	
+	YesNo(arg[row])
+
+	row,col = tooltip:AddLine("")
+	row,col = tooltip:AddLine("")
+
+	
+	row,col = tooltip:AddLine("")
+	row,col = tooltip:AddLine("")
+	row,col = tooltip:AddLine()
+	tooltip:SetCell(row,1,_G["ALT_KEY"] .. " " .. LeftButton .. " |cffffd200" .. _G["GAMEMENU_HELP"] .. "|r","RIGHT",3)
+	
+    row,col = tooltip:Show()
+end
+ 
+dataobj.OnEnter = function(self)
+    anchor_OnEnter(self)
+end
+ 
+dataobj.OnLeave = function(self)
+    -- Null operation: Some LDB displays get cranky if this method is missing.
+end
+
+dataobj.OnClick = function(self, button)  
+
+	local config_changed = false
+	
+	LibQTip:Release(self.tooltip_legenda)
+	self.tooltip_legenda = nil  
+	
+	LibQTip:Release(self.tooltip)
+	self.tooltip = nil
+
+	if IsShiftKeyDown() then 	
+		if button == "LeftButton" then	
+			if GMDURABILITY_CFG["SCALE"] < 0.8 then return end
+			GMDURABILITY_CFG["SCALE"] = GMDURABILITY_CFG["SCALE"] - 0.05
+			config_changed = true
+		end
+
+		if button == "RightButton" then 
+			if GMDURABILITY_CFG["SCALE"] > 2 then return end
+			GMDURABILITY_CFG["SCALE"] = GMDURABILITY_CFG["SCALE"] + 0.05
+			config_changed = true
+		end
+		
+		if button == "MiddleButton" then 
+			GMDURABILITY_CFG["SCALE"] = 1
+			config_changed = true
+		end
+	end
+
+	if IsAltKeyDown() then
+		if 	button == "LeftButton" then 
+			ShowLegenda(self)
+		end
+	end
+
+	if not IsModifierKeyDown() then 
+		if 	button == "RightButton" then  
+			ToggleCharacter('PaperDollFrame')
+		elseif button == "LeftButton" then
+			ToggleCharacter('PaperDollFrame')
+		end
+	end
+	
+	if config_changed then 
+		print(string.format("|cFFFFFF00%s|r config: scale %s",ADDON,GMDURABILITY_CFG["SCALE"]))
+	end
+end
 
 local frame = CreateFrame("Frame")
+frame:RegisterEvent("PLAYER_LOGIN")
 frame:RegisterEvent("UPDATE_INVENTORY_DURABILITY")
 frame:RegisterEvent("MERCHANT_SHOW")
 frame:SetScript("OnEvent", function(self, event, ...)
+
+	if event == "PLAYER_LOGIN" then 
+	
+		GMDURABILITY_CFG = GMDURABILITY_CFG or {}
+		local GMDURABILITY_DEFAULTS = {
+			AUTOREPAIR = true,
+			GUILDREPAIR = true,
+			AUTOSELL = true,
+			SCALE = 1
+		}
+		for k in pairs(GMDURABILITY_DEFAULTS) do
+			if GMDURABILITY_CFG[k] == nil then GMDURABILITY_CFG[k] = GMDURABILITY_DEFAULTS[k] end
+		end
+		
+		-- wipe old savedvars, to be removed in future releases
+		GMDURABILITY = {}
+		
+	end
+	-- UpdateLDB()
 	
 	if event == "UPDATE_INVENTORY_DURABILITY" then
 
@@ -119,33 +475,21 @@ frame:SetScript("OnEvent", function(self, event, ...)
 		end
 		
 		dataobj.text = string_format(format_color, text_color[perc][1]*255, text_color[perc][2]*255, text_color[perc][3]*255, string_format("%d%%",mindurability*100)).."|r"
-		
-		dataobj.OnClick = function(self, button)  
-
-			if 		button == "LeftButton" 		then GMDURABILITY["AUTOREPAIR"] = 	not GMDURABILITY["AUTOREPAIR"] 					
-			elseif 	button == "MiddleButton" 	then GMDURABILITY["GUILDREPAIR"] = 	not GMDURABILITY["GUILDREPAIR"] 					
-			elseif 	button == "RightButton" 	then GMDURABILITY["AUTOSELL"] = 	not GMDURABILITY["AUTOSELL"] 
-			end
-			
-		end
 
 	elseif event =="MERCHANT_SHOW" then 
 	
 		local mymoney = GetMoney()
 
 		-- sell greys
-		if GMDURABILITY["AUTOSELL"] == true then 
+		if GMDURABILITY_CFG["AUTOSELL"] == true then 
 			local bag, slot
 			for bag = 0,4,1 do 
 				for slot = 1, GetContainerNumSlots(bag), 1 do 
-					local name = GetContainerItemLink(bag,slot)
-					if name and string_find(name,"ff9d9d9d") then 
-						
+					local itemlink = GetContainerItemLink(bag,slot)
+					if itemlink and  select(3, GetItemInfo(itemlink)) == 0 and select(11, GetItemInfo(itemlink)) then 						
 						local _, itemCount = GetContainerItemInfo(bag, slot);
-						local _, _, _, _, _, _, _, _, _, _, vendorPrice = GetItemInfo(name)
-						UseContainerItem(bag,slot) 
-						
-						print(string_format("%s: selling %s %s for %s", prgname, itemCount, name, GetCoinTextureString(vendorPrice * itemCount)))
+						UseContainerItem(bag,slot) 						
+						print(string_format(L["%s: selling %s %s for %s"], prgname, itemCount, itemlink, GetCoinTextureString(select(11, GetItemInfo(itemlink)) * itemCount)))
 					end
 				end
 			end
@@ -153,114 +497,19 @@ frame:SetScript("OnEvent", function(self, event, ...)
 		
 		-- autorepair
 		local cost = GetRepairAllCost()	
-		if cost > 0 and CanMerchantRepair() and GMDURABILITY["AUTOREPAIR"] then	
+		if cost > 0 and CanMerchantRepair() and GMDURABILITY_CFG["AUTOREPAIR"] then	
 					
-			if CanWithdrawGuildBankMoney() and CanGuildBankRepair() and GMDURABILITY["GUILDREPAIR"] == true then
+			if CanWithdrawGuildBankMoney() and CanGuildBankRepair() and GMDURABILITY_CFG["GUILDREPAIR"] == true then
 				RepairAllItems(1)
-				print(prgname .. ": repair with guild funds " .. GetCoinTextureString(cost))
+				print(prgname .. ": " .. L["repair with guild funds"] .. " " .. GetCoinTextureString(cost))
 			else
 				if mymoney >= cost then
 					RepairAllItems()
-					print(prgname .. ": repair " .. GetCoinTextureString(cost))
+					print(prgname .. ": " .. L["repair"] .. " " .. GetCoinTextureString(cost))
 				else 
-					print(prgname .. ": no repair, need more money")
+					print(prgname .. ": " .. L["no repair, need more money"])
 				end
 			end
 		end	
 	end
 end)
-
-
-function dataobj.OnTooltipShow(tooltip)
-
-	tooltip:AddLine(ADDON)
-	tooltip:AddLine(" ")
-	
-	tooltip:AddLine(string_format("Item Level: Total %.1f - Equipped %.1f", GetAverageItemLevel()) ,1,1,1)
-	tooltip:AddLine(" ")
-	
-	if HasArtifactEquipped() then
-		if  GetInventoryItemID("player", 17) then  -- artefatto doppio
-
-			milv = GetDetailedItemLevelInfo(GetInventoryItemLink("player", GetInventorySlotInfo("MainHandSlot")))
-			oilv = GetDetailedItemLevelInfo(GetInventoryItemLink("player", GetInventorySlotInfo("SecondaryHandSlot")))
-			
-			if milv <= oilv then 
-				ailv = oilv 
-			else
-				ailv = milv
-			end
-
-		else
-			ailv = GetDetailedItemLevelInfo(GetInventoryItemLink("player", GetInventorySlotInfo("MainHandSlot")))
-		end
-	end
-	
-	for idx=1, #slots do
-		
-		
-		if GetInventoryItemLink("player", GetInventorySlotInfo(slots[idx])) then 			
-			
-			local tempdurability = colorperc(tonumber(durabilities[idx]/100))
-						
-			if idx > 14 and HasArtifactEquipped() then 				
-				GetDetailedItemLevel = ailv
-			else			
-				GetDetailedItemLevel = GetDetailedItemLevelInfo(GetInventoryItemLink("player", GetInventorySlotInfo(slots[idx])))
-			end
-			
-			if GetDetailedItemLevel <= select(2,GetAverageItemLevel()) then 
-			
-				GetDetailedItemLevel = 	string_format(format_color,255,0,0, GetDetailedItemLevel ) .. "|r"
-			
-			else
-
-				GetDetailedItemLevel = 	string_format(format_color,0,255,0, GetDetailedItemLevel ) .. "|r"
-			
-			end
-
-			tooltip:AddDoubleLine(GetDetailedItemLevel .. " - " .. unescape(GetInventoryItemLink("player",GetInventorySlotInfo(slots[idx]))), string_format(format_color, text_color[tempdurability][1]*255, text_color[tempdurability][2]*255,text_color[tempdurability][3]*255, durabilities[idx]).."|r")
-
-			-- More verbose
-			-- tooltip:AddDoubleLine(GetDetailedItemLevel .. " - " .. unescape(GetInventoryItemLink("player",GetInventorySlotInfo(slots[idx]))), strsub(slots[idx],1,-5) .. " - " .. string_format(format_color, text_color[tempdurability][1]*255, text_color[tempdurability][2]*255,text_color[tempdurability][3]*255, durabilities[idx]).."|r")
-		end
-	end
-	
-	tooltip:AddLine(" ")
-	
-	if GMDURABILITY["AUTOREPAIR"] == true then 
-		tooltip:AddDoubleLine("Repair", "YES", 1,1,1,0,1,0)
-	else
-		tooltip:AddDoubleLine("Repair", "NO", 1,1,1,1,0,0)
-	end
-	
-	if GMDURABILITY["GUILDREPAIR"] == true then 
-		tooltip:AddDoubleLine("Use guild funds", "YES", 1,1,1,0,1,0)
-	else
-		tooltip:AddDoubleLine("Use guild funds", "NO", 1,1,1,1,0,0)
-	end
-	
-	if GMDURABILITY["AUTOSELL"] == true then 
-		tooltip:AddDoubleLine("Sell junk", "YES", 1,1,1,0,1,0)
-	else
-		tooltip:AddDoubleLine("Sell junk", "NO", 1,1,1,1,0,0)
-	end
-	
-	tooltip:AddLine(" ")
-	tooltip:AddDoubleLine("Left Click", "Toggle Repair")
-	tooltip:AddDoubleLine("Middle Click", "Toggle Guild funds")
-	tooltip:AddDoubleLine("Right Click", "Toggle Sell")
-
-
-	tooltip:AddLine(" ")		
-	tooltip:AddLine("Legenda",1,1,0)
-
-	tooltip:AddLine("ItemLevel: " .. string_format(format_color,255,0,0,"below").."|r / " .. string_format(format_color,0,255,0,"above").."|r average equipped")
-
-	tooltip:AddLine("Durability: " .. 
-					string_format(format_color,255,0,0,"0-24")..	"|r ".. 
-					string_format(format_color,255,128,0,"25-49")..	"|r " ..
-					string_format(format_color,255,255,0,"50-74")..	"|r " ..
-					string_format(format_color,0,255,0,"75-100")..	"|r")
-end
-

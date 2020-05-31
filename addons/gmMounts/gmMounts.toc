@@ -1,8 +1,8 @@
-## Interface: 70100
+## Interface: 80300
+## Version: 830-2020031501
 ## Title: gmMounts
 ## Notes: Randomly selects a mount from custom categories or defaults. Type |cff00d4ed/gmm|r for options.
-## Author: Axilea, Nemesis(it)
-## Version: 1.0-2016102601
+## Author: gmarco
 
 core.lua
 categories.lua

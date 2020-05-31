@@ -1,47 +1,32 @@
 gmMounts_tbl = { 
    
-   flying = {
-		"Draco Del Crepuscolo",
-		"Draco Rosso",
-		"Fenice Oscura",
-		"Nuvoletta Rossa",
-		"Proto-Draco Ferroso",
-   },
+	flying = {
+		"Hogrus, Swine of Good Fortune",
+	},
    
-   ground = {
-		"Fiera della Luna Rapida",
-		"Fiera della Nebbia Rapida",
-		"Fiera della Notte Striata",
-		"Fiera della Notte Striata",
-		"Fiera Glaciale di Fontefredda",
-		"Fiera Glaciale Maculata",
-		"Fiera Glaciale Striata",
-		"Gru Cavalcabile Azzurra",
-		"Orso Bruno Corazzato",
-		"Orso da Battaglia Amani",
-		"Orso da Guerra Nero",
-		"Orso Polare Bianco",
-		"Raptor Razzashi",
-		"Signore dei Corvi",
-		"Zampalesta Bianco",
-		"Zampalunga Rapido delle Foreste",
-		"Raptor Fossilizzato",
-	 },
+   	ground = {
+		"Hogrus, Swine of Good Fortune",
+		"Squeakers, the Trickster",
+    },
    
-   repair = {
-		"Yak della Grande Spedizione",
-   },
+   	repair = {
+		"Grand Expedition Yak",
+   	},
    
-   funny = {
-		"Gerride Azzurro",
+   	funny = {
+		"Azure Water Strider",
+		"Crimson Water Strider",
    
-   },
+   	},
    
-   combo = {
-		"Draco di Arenaria",
-		"Dueruote del Mekgeniere",
-   },
+   	combo = {
+		"Sandstone Drake",
+		"Mechano-Hog",
+   	},
    
+	suramar = {
+		"Arcanist's Manasaber",
+	},
    
    -- add your custom categories here
 }
