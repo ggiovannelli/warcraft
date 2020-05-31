@@ -1,8 +1,8 @@
-## Interface: 70100
+## Interface: 80300
+## Version: 830-2020031501
 ## Title: gmAggroMon
 ## Notes: A very minimal aggro alert addon. 
-## Author: Axilea, Nemesis(it)
-## Version: 1.0-2016102602
+## Author: gmarco
 ## SavedVariables: GMAGGROMON
 
 core.lua
