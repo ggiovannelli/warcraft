@@ -1,12 +1,14 @@
-## Interface: 70100
+## Interface: 80300
+## Version: 830-2020040701
 ## Title: gmAutopsy
 ## Notes: Another minimal fatality-like addon
-## Author: Axilea, Nemesis(it)
-## Version: v1.0-2016123101
-## SavedVariables: GMAUTOPSY
+## Author: gmarco
+## SavedVariables: GMAUTOPSY_CFG
 
 libs\LibStub.lua
 libs\CallbackHandler-1.0.lua
 libs\LibDataBroker-1.1.lua
+libs\LibQTip-1.0.lua
 
+localization.lua
 core.lua
