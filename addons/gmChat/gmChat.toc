@@ -1,0 +1,8 @@
+## Interface: 80300
+## Version: 830-2020031501
+## Title: gmChat
+## Notes: Minimal Chat Restyle
+## Author: gmarco
+## SavedVariables: GMCHAT
+
+core.lua
