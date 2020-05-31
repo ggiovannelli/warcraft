@@ -1,0 +1,7 @@
+## Interface: 80300
+## Version: 830-2020031501
+## Title: gmActionBars
+## Notes: Small ActionBars skinning
+## Author: gmarco
+
+core.lua
