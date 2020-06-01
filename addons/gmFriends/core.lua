@@ -17,9 +17,9 @@ local faction_icon = {
 	Horde = "|TInterface\\TargetingFrame\\UI-PVP-HORDE:13:13:0:0:64:64:0:38:0:36|t"
 }
 
-local bnet_code = _G["BATTLENET_FONT_COLOR_CODE"] 
+local bnet_code = _G["BATTLENET_FONT_COLOR_CODE"]
 local bnet_color = _G["BATTLENET_FONT_COLOR"]
- 
+
 local arg = {}
 local arg_note = {}
 
@@ -51,10 +51,10 @@ local function GetClassToken(className)
 end
 
 local function classcolor(name,class)
-	if class then 
+	if class then
 		class = GetClassToken(class)
 		local color = _G["RAID_CLASS_COLORS"][class]
-		if color then 
+		if color then
 			return string.format("\124cff%02x%02x%02x%s\124r", color.r*255, color.g*255, color.b*255, name)
 		end
 	end
@@ -62,10 +62,10 @@ local function classcolor(name,class)
 end
 
 local function Button_OnClick(row,arg,button)
-	
+
 	if button == "LeftButton" then
-	
-		if arg.type == "FRIENDS" then 	
+
+		if arg.type == "FRIENDS" then
 			if IsAltKeyDown() then
 				print(string.format("%s : %s",_G["GROUP_INVITE"],classcolor(arg.name,arg.class)))
 				C_PartyInfo.InviteUnit(arg.name)
@@ -73,43 +73,43 @@ local function Button_OnClick(row,arg,button)
 				ChatFrame_SendTell(arg.name)
 			end
 		end
-		
-		if arg.type == "BNET" then 
-		
+
+		if arg.type == "BNET" then
+
 			if arg.client == BNET_CLIENT_WOW and arg.wowProjectID == WOW_PROJECT_ID and IsAltKeyDown() then
 				print(string.format("%s : %s",_G["GROUP_INVITE"],arg.name))
 				C_PartyInfo.InviteUnit(arg.name)
-			else 
+			else
 				ChatFrame_SendBNetTell(arg.account)
 			end
-		end	
-	end	
+		end
+	end
 end
 
 local function OnRelease(self)
 	LibQTip:Release(self.tooltip)
-	self.tooltip = nil  
-end  
- 
+	self.tooltip = nil
+end
+
 local function OnLeave(self)
 	if self.tooltip and not self.tooltip:IsMouseOver() then
 		self.tooltip:Release()
 	end
-end  
+end
 
 local function anchor_OnEnter(self)
-	
+
 	arg = {}
 	arg_note = {}
 
 	if self.tooltip then
 		LibQTip:Release(self.tooltip)
-		self.tooltip = nil  
+		self.tooltip = nil
 	end
 
     local row,col
     local tooltip = LibQTip:Acquire(ADDON.."tip", 4, "LEFT", "CENTER", "LEFT","LEFT")
-    self.tooltip = tooltip 
+    self.tooltip = tooltip
     tooltip:SmartAnchorTo(self)
 	tooltip:EnableMouse(true)
 	tooltip.OnRelease = OnRelease
@@ -117,27 +117,27 @@ local function anchor_OnEnter(self)
     tooltip:SetAutoHideDelay(.1, self)
 
 	-- BNET Friends ---------------------------------------------------------------------------------------
-	
-	if GMFRIENDS_CFG[1][2] then 
+
+	if GMFRIENDS_CFG[1][2] then
 
 		local numBNetTotal, numBNetOnline, numBNetFavorite, numBNetFavoriteOnline = BNGetNumFriends()
 
-		if numBNetTotal > 0 then 
+		if numBNetTotal > 0 then
 
 			row,col = tooltip:AddLine("")
-			
+
 			row,col = tooltip:AddHeader()
 			tooltip:SetCell(row,1,string.format("BNET %s",_G["SHOW_TOAST_ONLINE_TEXT"]),"LEFT",4)
-			tooltip:SetCellTextColor(row,1,bnet_color.r,bnet_color.g,bnet_color.b)	
+			tooltip:SetCellTextColor(row,1,bnet_color.r,bnet_color.g,bnet_color.b)
 
-			row,col = tooltip:AddLine("")		
+			row,col = tooltip:AddLine("")
 			row,col = tooltip:AddLine("")
 
 			row,col = tooltip:AddLine(_G["NAME"],_G["LEVEL"],_G["ZONE"],_G["GAME"])
 			tooltip:SetLineTextColor(row, 1, 0, 0)
 
 			row,col = tooltip:AddLine("")
-			
+
 			local numBNetTotal, numBNetOnline, numBNetFavorite, numBNetFavoriteOnline = BNGetNumFriends()
 
 			for i = 1, numBNetTotal do
@@ -147,15 +147,15 @@ local function anchor_OnEnter(self)
 
 				local bnetAccID 	= accountInfo.gameAccountID
 				local account 		= accountInfo.accountName
-				local btag 			= accountInfo.battleTag	
+				local btag 			= accountInfo.battleTag
 				local isAFK			= accountInfo.battleTag
 				local isDND			= accountInfo.isDND
-								
+
 				local isOnline 		= accountInfo.gameAccountInfo.isOnline
 				local client 		= accountInfo.gameAccountInfo.clientProgram
 				local character 	= accountInfo.gameAccountInfo.characterName
 				local realmName		= accountInfo.gameAccountInfo.realmName
-				local timestamp 	= date("%d.%m.%y %H:%M:%S", accountInfo.lastOnlineTime)	
+				local timestamp 	= date("%d.%m.%y %H:%M:%S", accountInfo.lastOnlineTime)
 				local class 		= accountInfo.gameAccountInfo.className
 				local richPresence 	= accountInfo.gameAccountInfo.richPresence
 				local wowProjectID 	= accountInfo.gameAccountInfo.wowProjectID
@@ -167,7 +167,7 @@ local function anchor_OnEnter(self)
 
 				if isGameAFK then
 					StatusIcon = AwayIcon
-				elseif isGameBusy then 
+				elseif isGameBusy then
 					StatusIcon = DnDIcon
 				else
 					StatusIcon = ""
@@ -178,106 +178,106 @@ local function anchor_OnEnter(self)
 				if (GMFRIENDS_CFG[4][2] and (client == BNET_CLIENT_APP or client == "BSAp")) == false then
 
 					if isOnline then
-									
+
 						if character == nil then character = account end
 
 						-- Setup some defaults
 						row,col = tooltip:AddLine("","","","")
 						tooltip:SetCell(row,3,richPresence)
-						tooltip:SetCell(row,4,client)						
-						
-						arg[row] = { 
-							type = "BNET", 
-							account = account, 
-							name = "-", 
-							class = "-", 
-							client = client, 
-							wowProjectID = "-"  
-						}						
-						
-						
+						tooltip:SetCell(row,4,client)
+
+						arg[row] = {
+							type = "BNET",
+							account = account,
+							name = "-",
+							class = "-",
+							client = client,
+							wowProjectID = "-"
+						}
+
+
 						-- retail WoW client
-						if client == BNET_CLIENT_WOW and wowProjectID == WOW_PROJECT_ID then
-			
-								tooltip:SetCell(row,1,BNet_GetClientEmbeddedTexture(client, 14) .. StatusIcon .. classcolor(character,class) .. " - " .. account)
+						if client == BNET_CLIENT_WOW then
+
+								tooltip:SetCell(row,1,BNet_GetClientEmbeddedTexture(client, 14) .. StatusIcon .. classcolor(character,class) .. " - " .. bnet_code .. account .. "|r")
 								tooltip:SetCell(row,2,level .. faction_icon[factionName])
-								
-								-- Sometimes accountInfo.gameAccountInfo.realmName == nil 
-								if realmName then 
+
+								-- Sometimes accountInfo.gameAccountInfo.realmName == nil
+								if realmName then
 									arg[row]["name"] = character .. "-" .. realmName
-								else 
+								else
 									arg[row]["name"] = character .. "-" .. GetRealmName()
 								end
-								
+
 								arg[row]["wowProjectID"] = wowProjectID
 								arg[row]["class"] = class
 
 						-- Mobile Battle.net
-						elseif client == BNET_CLIENT_APP or client == "BSAp" then 
+						elseif client == BNET_CLIENT_APP or client == "BSAp" then
 							tooltip:SetCell(row,1,BNet_GetClientEmbeddedTexture(client, 14) .. account)
 						-- Other Games
 						else
-						
-							if character == account then 
+
+							if character == account then
 								tooltip:SetCell(row,1,BNet_GetClientEmbeddedTexture(client, 14) .. StatusIcon .. classcolor(character,class))
-							else 
-								tooltip:SetCell(row,1,BNet_GetClientEmbeddedTexture(client, 14) .. StatusIcon .. classcolor(character,class) .. " - " .. account)		
+							else
+								tooltip:SetCell(row,1,BNet_GetClientEmbeddedTexture(client, 14) .. StatusIcon .. classcolor(character,class) .. " - " .. account)
 							end
 						end
-						
-						tooltip:SetLineScript(row, 'OnMouseUp', Button_OnClick, arg[row])
-						
 
-						if client == BNET_CLIENT_APP or client == "BSAp" then 
+						tooltip:SetLineScript(row, 'OnMouseUp', Button_OnClick, arg[row])
+
+
+						if client == BNET_CLIENT_APP or client == "BSAp" then
 							tooltip:SetLineTextColor(row,bnet_color.r,bnet_color.g,bnet_color.b)
 						else
 							tooltip:SetLineTextColor(row, 1, 1, 1)
-						end	
+						end
 					end
-				end	
-			end	
+				end
+			end
 		end
 	end
-	
+
 	-- WoW Friends --------------------------------------------------------------------------------------------------
 
 	if GMFRIENDS_CFG[2][2] then
 
 		local numTotFriends = C_FriendList.GetNumFriends()
 		local numTotOnlineFriends = C_FriendList.GetNumOnlineFriends()
-		
+
 		-- Re-check BNET before use them again
 		local numBNetTotal = BNGetNumFriends()
-		
-		if numTotOnlineFriends > 0 then 
-				
+
+		if numTotOnlineFriends > 0 then
+
 			-- If BNET is UP or BNET (with online) ... print separator
-			if (GMFRIENDS_CFG[1][2] and numBNetTotal > 0) then  
-					row,col = tooltip:AddLine("")		
+			if (GMFRIENDS_CFG[1][2] and numBNetTotal > 0) then
+					row,col = tooltip:AddLine("")
 					row,col = tooltip:AddLine("")
 					row,col = tooltip:AddSeparator()
 					row,col = tooltip:AddLine("")
-					row,col = tooltip:AddLine("")	
+					row,col = tooltip:AddLine("")
 			end
-			
+
 			local numBNetTotal, numBNetOnline, numBNetFavorite, numBNetFavoriteOnline = BNGetNumFriends()
-			
+
 			row,col = tooltip:AddLine("")
-			
+
 			row,col = tooltip:AddHeader()
 
 			string.format("WoW %s",_G["SHOW_TOAST_ONLINE_TEXT"])
 
 			tooltip:SetCell(row,1,string.format("WoW %s",_G["SHOW_TOAST_ONLINE_TEXT"]),"LEFT",4)
-			tooltip:SetCellTextColor(row,1,1,1,0)	
+			tooltip:SetCellTextColor(row,1,1,1,0)
 
-			row,col = tooltip:AddLine("")		
+			row,col = tooltip:AddLine("")
 			row,col = tooltip:AddLine("")
 
 			row,col = tooltip:AddLine(_G["NAME"],_G["LEVEL"],_G["ZONE"],_G["CLASS"])
 			tooltip:SetLineTextColor(row, 1, 0, 0)
 
-			row,col = tooltip:AddLine("")	
+			row,col = tooltip:AddLine("")
 
 			for i = 1, numTotFriends do
 
@@ -295,7 +295,7 @@ local function anchor_OnEnter(self)
 
 					if isafk then
 						StatusIcon = AwayIcon
-					elseif isdnd then 
+					elseif isdnd then
 						StatusIcon = DnDIcon
 					else
 						StatusIcon = ""
@@ -303,76 +303,76 @@ local function anchor_OnEnter(self)
 					row,col = tooltip:AddLine(StatusIcon .. classcolor(name,class),level,area,class)
 
 					arg[row] = { type = "FRIENDS", name = name, class = class, client = "-", account = "-"}
-					tooltip:SetLineScript(row, 'OnMouseUp', Button_OnClick, arg[row])	
+					tooltip:SetLineScript(row, 'OnMouseUp', Button_OnClick, arg[row])
 				end
-			end	
+			end
 		end
-	end	
+	end
 
 	-- Legenda -------------------------------------------------------------------------------------------------------
-	
+
 	if GMFRIENDS_CFG[3][2] then
-	
+
 		-- Re-check BNET and FriendList before use them again
 		local numTotOnlineFriends = C_FriendList.GetNumOnlineFriends()
 		local numBNetTotal = BNGetNumFriends()
-	
+
 		-- If Show BNET is UP or BNET (with online) or Friend List (with online) is up ... print separator
-		if (GMFRIENDS_CFG[1][2] and numBNetTotal > 0) or (GMFRIENDS_CFG[2][2] and numTotOnlineFriends > 0) then  
-				row,col = tooltip:AddLine("")		
+		if (GMFRIENDS_CFG[1][2] and numBNetTotal > 0) or (GMFRIENDS_CFG[2][2] and numTotOnlineFriends > 0) then
+				row,col = tooltip:AddLine("")
 				row,col = tooltip:AddLine("")
 				row,col = tooltip:AddSeparator()
 				row,col = tooltip:AddLine("")
-				row,col = tooltip:AddLine("")	
+				row,col = tooltip:AddLine("")
 		end
-	
-		row,col = tooltip:AddLine()		
-		tooltip:SetCell(row,1, LeftButton .. " |cFF00FF00" .. _G["GUILD_FRAME_TITLE"] .."|r","LEFT",2)
-		tooltip:SetCell(row,3,_G["NAME"] .." ".. LeftButton .. " |cFFFF7FFF" .. _G["WHISPER"] .."|r","RIGHT",2)	
 
 		row,col = tooltip:AddLine()
-		tooltip:SetCell(row,1, RightButton .." |cFFFFFF00" .. _G["SHOW_FRIENDS_LIST"] .. "|r","LEFT",2)	
+		tooltip:SetCell(row,1, LeftButton .. " |cFF00FF00" .. _G["GUILD_FRAME_TITLE"] .."|r","LEFT",2)
+		tooltip:SetCell(row,3,_G["NAME"] .." ".. LeftButton .. " |cFFFF7FFF" .. _G["WHISPER"] .."|r","RIGHT",2)
+
+		row,col = tooltip:AddLine()
+		tooltip:SetCell(row,1, RightButton .." |cFFFFFF00" .. _G["SHOW_FRIENDS_LIST"] .. "|r","LEFT",2)
 		tooltip:SetCell(row,3,_G["NAME"] .. " ALT+" .. LeftButton .. " |cFFAAAAFF" .. _G["PARTY_INVITE"] .."|r","RIGHT",2)
-		
+
 	end
-	
+
 	-- The END -------------------------------------------------------------------------------------------------
-	
-	if GMFRIENDS_CFG[1][2] == false and GMFRIENDS_CFG[2][2] == false and GMFRIENDS_CFG[3][2] == false and GMFRIENDS_CFG[4][2] == false then 
+
+	if GMFRIENDS_CFG[1][2] == false and GMFRIENDS_CFG[2][2] == false and GMFRIENDS_CFG[3][2] == false and GMFRIENDS_CFG[4][2] == false then
 
 		LibQTip:Release(self.tooltip)
-		self.tooltip = nil  
-		
-	else 
+		self.tooltip = nil
+
+	else
 		-- Show the tooltip
         row,col = tooltip:Show()
         tooltip:UpdateScrolling(UIParent:GetHeight()-100)
 	end
-	
-	
+
+
 end
 
- 
-dataobj.OnClick = function(self, button)  
+
+dataobj.OnClick = function(self, button)
 
 	if InCombatLockdown() then return end
 
 	if self.tooltip then
 		LibQTip:Release(self.tooltip)
-		self.tooltip = nil  
+		self.tooltip = nil
 	end
 
 
 	if button == "LeftButton" then
 		ToggleGuildFrame()
-		if IsInGuild() then 	
+		if IsInGuild() then
 			CommunitiesFrame:SetDisplayMode(COMMUNITIES_FRAME_DISPLAY_MODES.ROSTER)
-		end	
-	end	
-	
+		end
+	end
+
 	if button == "RightButton" then
 		ToggleFriendsFrame(1)
-	end	
+	end
 end
 
 dataobj.OnEnter = function(self)
@@ -409,39 +409,39 @@ subtext:SetJustifyV("TOP")
 subtext:SetText(GetAddOnMetadata(ADDON, "Notes"))
 options.subtext = subtext
 
--- All the lines of the options panel are built during the 
--- event "PLAYER_LOGIN" 
+-- All the lines of the options panel are built during the
+-- event "PLAYER_LOGIN"
 
--- Reset and Reload Default 
+-- Reset and Reload Default
 local button1 = CreateFrame("button", ADDON .. "button1", options, "UIPanelButtonTemplate")
 button1:SetHeight(40)
 button1:SetWidth(150)
 button1:SetPoint("BOTTOMLEFT", 10, 16)
 button1:SetText("Reset and reload UI")
 button1.tooltipText = "BEWARE: Reset your custom settings and reload your UI"
-button1:SetScript("OnClick",  
+button1:SetScript("OnClick",
 	function()
 		GMFRIENDS_CFG = {}
 		ReloadUI()
-	end)  
-	
--- Reload UI 
+	end)
+
+-- Reload UI
 local button2 = CreateFrame("button", ADDON .. "button2", options, "UIPanelButtonTemplate")
 button2:SetHeight(40)
 button2:SetWidth(150)
 button2:SetPoint("BOTTOMLEFT", 190, 16)
 button2:SetText("Save and reload UI")
 button2.tooltipText = "Save your settings and reload your UI"
-button2:SetScript("OnClick",  
+button2:SetScript("OnClick",
 	function()
 		ReloadUI()
-	end)  	
+	end)
 
---- credits  
+--- credits
 local credits = options:CreateFontString("$parentTitle", "ARTWORK", "SystemFont_Small")
 credits:SetPoint("BOTTOMRIGHT", -16, 16)
 credits:SetText("version: |cffffd200"..GetAddOnMetadata(ADDON, "Version").."|r by |cffffd200"..GetAddOnMetadata(ADDON, "Author").."|r")
-options.credits = credits		
+options.credits = credits
 
 function options.refresh()
 	for i = 1, #GMFRIENDS_CFG do
@@ -467,17 +467,17 @@ frame:RegisterEvent("BN_FRIEND_ACCOUNT_ONLINE")
 frame:RegisterEvent("BN_FRIEND_ACCOUNT_OFFLINE")
 frame:SetScript("OnEvent", function(self, event, ...)
 
-		if event == "PLAYER_LOGIN" then	
+		if event == "PLAYER_LOGIN" then
 
-			-- Building default values 
+			-- Building default values
 			GMFRIENDS_CFG = GMFRIENDS_CFG or {}
 			local GMFRIENDS_DEFAULTS = {
 				{L["Show Battle.net"], true},							-- 	1
-				{L["Show FriendList"], true},							--	2    
+				{L["Show FriendList"], true},							--	2
 				{L["Show Help"], true}	,								--	3
 				{L["Show only playing Battle.net Friends"], true},		--	4
 			}
-				
+
 			for k in pairs(GMFRIENDS_DEFAULTS) do
 				if GMFRIENDS_CFG[k] == nil then GMFRIENDS_CFG[k] = GMFRIENDS_DEFAULTS[k] end
 			end
@@ -491,12 +491,12 @@ frame:SetScript("OnEvent", function(self, event, ...)
 				checkbox[i]:SetScript("OnClick", function(self)
 					if checkbox[i]:GetChecked() then
 						GMFRIENDS_CFG[i][2] = true
-					else 
+					else
 						GMFRIENDS_CFG[i][2] = false
-					end	
+					end
 				end)
 				checkbox[i]:SetChecked(GMFRIENDS_CFG[i][2])
-			end		
+			end
 		end
 
 		-- Manage other events
